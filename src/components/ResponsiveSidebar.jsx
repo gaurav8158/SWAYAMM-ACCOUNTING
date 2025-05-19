@@ -135,7 +135,7 @@ const ResponsiveSidebar = () => {
                             <>
                                 <h4 className="text-lg font-medium mb-1">Need help?</h4>
                                 <p className="text-sm text-blue-100 mb-4">Please check our docs</p>
-                                <button className="w-full py-2 bg-white bg-opacity-20 rounded-lg text-white text-sm font-medium hover:bg-opacity-30 transition-all duration-200">
+                                <button className="w-full py-2 bg-transparent text-gray-800 font-bold hover:text-cyan-400 bg-opacity-20 rounded-lg text-sm font-medium hover:bg-opacity-30 transition-all duration-200">
                                     DOCUMENTATION
                                 </button>
                             </>
