@@ -1,8 +1,9 @@
 'use client'
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Star, Home, FileText, BarChart3 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, Star, Home, FileText, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
 import Navbar from './Navbar';
+import Dashboard from './Dashboard';
 
 const ResponsiveSidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -163,36 +164,11 @@ const ResponsiveSidebar = () => {
             </div>
 
             {/* Main content area */}
-            <div className={`${isCollapsed ? 'md:ml-20' : 'md:ml-72'} transition-all duration-300 ease-in-out min-h-screen bg-[#EEEEF1]`}>
-                {/* Nav bar with sidebar toggle for mobile */}
-                <Navbar pageTitle={pageTitles[activeItem]} toggleMobileSidebar={toggleMobileSidebar} />
-
-                {/* Your page content here */}
-                <div className="p-6">
-                    <div className="bg-white p-6 text-gray-700 rounded-xl shadow-sm mb-6">
-                        <h2 className="text-lg font-medium mb-4">Welcome to {pageTitles[activeItem]}</h2>
-                        <p className="text-gray-600">
-                            This is the {activeItem} section of your application. You can customize this content
-                            based on the active section. The sidebar and navbar will update accordingly.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div className="bg-white p-6 rounded-xl shadow-sm">
-                            <h3 className="font-medium mb-3">Quick Stats</h3>
-                            <p className="text-gray-600">View your key metrics at a glance</p>
-                        </div>
-                        <div className="bg-white p-6 rounded-xl shadow-sm">
-                            <h3 className="font-medium mb-3">Recent Activity</h3>
-                            <p className="text-gray-600">See your latest actions and updates</p>
-                        </div>
-                        <div className="bg-white p-6 rounded-xl shadow-sm">
-                            <h3 className="font-medium mb-3">Upcoming Tasks</h3>
-                            <p className="text-gray-600">Manage your priorities for the week</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Dashboard
+                isCollapsed={isCollapsed}
+                activeItem={activeItem}
+                toggleMobileSidebar={toggleMobileSidebar}
+            ></Dashboard>
         </>
     );
 };
