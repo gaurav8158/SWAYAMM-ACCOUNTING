@@ -114,7 +114,7 @@ const Dashboard = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                 (+23%) than last week
                             </p>
 
-                            <div className="grid grid-cols-4 gap-4">
+                            <div className="grid grid-cols-4 gap-4 ">
                                 {stats.map((stat, index) => (
                                     <div key={index} className="flex flex-col items-start">
                                         <div className="flex items-center gap-1 mb-1">
