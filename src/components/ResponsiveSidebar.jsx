@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight, ArrowRight, Star, Home, FileText, BarChart3 
 import Image from 'next/image';
 import Navbar from './Navbar';
 import Dashboard from './Dashboard';
+import Account from './Account';
+import Ledger from './Ledger';
 
 const ResponsiveSidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -19,10 +21,13 @@ const ResponsiveSidebar = () => {
     };
 
     // Handle menu item clicks
-    const handleMenuClick = (itemName) => {
+    const handleMenuClick = (e, itemName) => {
+        e.preventDefault(); // Prevent default anchor behavior
+        console.log('Menu clicked:', itemName); // Debug log
         setActiveItem(itemName);
+
         // Close mobile sidebar after selection on mobile
-        if (window.innerWidth < 768) {
+        if (typeof window !== 'undefined' && window.innerWidth < 768) {
             setIsMobileOpen(false);
         }
     };
@@ -33,6 +38,36 @@ const ResponsiveSidebar = () => {
         'account': 'Account Management',
         'ledger': 'Financial Ledger'
     };
+
+    const renderContent = () => {
+        console.log('Rendering content for:', activeItem); // Debug log
+
+        switch (activeItem) {
+            case 'dashboard':
+                return <Dashboard
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />;
+            case 'account':
+                return <Account
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar} />;
+            case 'ledger':
+                return <Ledger
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />;
+            default:
+                return <Dashboard
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />;
+        }
+    }
 
     return (
         <>
@@ -77,18 +112,17 @@ const ResponsiveSidebar = () => {
                     <div className="pt-4">
                         <h2 className={`text-xs font-semibold text-gray-500 mb-3 ${isCollapsed ? 'text-center' : 'px-4'}`}>DASHBOARD</h2>
                         <div className="mb-6">
-                            <a
-                                href="#"
-                                className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200 
+                            <button
+                                className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200 
                                 ${activeItem === 'dashboard' ? 'bg-white shadow-sm' : 'hover:bg-white hover:shadow-sm'}`}
-                                onClick={() => handleMenuClick('dashboard')}
+                                onClick={(e) => handleMenuClick(e, 'dashboard')}
                             >
                                 <span className={`flex items-center justify-center w-10 h-10 rounded-lg
-                                    ${activeItem === 'dashboard' ? 'bg-cyan-400 text-white' : 'text-blue-700'}`}>
+                                    ${activeItem === 'dashboard' ? 'bg-blue-100 text-blue-600' : 'text-blue-700'}`}>
                                     <Home size={20} />
                                 </span>
                                 {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Dashboard</span>}
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -96,30 +130,28 @@ const ResponsiveSidebar = () => {
                     <div className="pt-2">
                         <h2 className={`text-xs font-semibold text-gray-500 mb-3 ${isCollapsed ? 'text-center' : 'px-4'}`}>MASTER</h2>
                         <div className="space-y-2">
-                            <a
-                                href="#"
-                                className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
+                            <button
+                                className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
                                 ${activeItem === 'account' ? 'bg-white shadow-sm' : 'hover:bg-white hover:shadow-sm'}`}
-                                onClick={() => handleMenuClick('account')}
+                                onClick={(e) => handleMenuClick(e, 'account')}
                             >
                                 <span className={`flex items-center justify-center w-10 h-10 rounded-lg
-                                    ${activeItem === 'account' ? 'bg-cyan-400 text-white' : 'text-blue-700'}`}>
+                                    ${activeItem === 'account' ? 'bg-blue-100 text-blue-600' : 'text-blue-700'}`}>
                                     <BarChart3 size={20} />
                                 </span>
                                 {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Account</span>}
-                            </a>
-                            <a
-                                href="#"
-                                className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
+                            </button>
+                            <button
+                                className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
                                 ${activeItem === 'ledger' ? 'bg-white shadow-sm' : 'hover:bg-white hover:shadow-sm'}`}
-                                onClick={() => handleMenuClick('ledger')}
+                                onClick={(e) => handleMenuClick(e, 'ledger')}
                             >
                                 <span className={`flex items-center justify-center w-10 h-10 rounded-lg
-                                    ${activeItem === 'ledger' ? 'bg-cyan-400 text-white' : 'text-blue-700'}`}>
+                                    ${activeItem === 'ledger' ? 'bg-blue-100 text-blue-600' : 'text-blue-700'}`}>
                                     <BarChart3 size={20} />
                                 </span>
                                 {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Ledger</span>}
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -154,21 +186,21 @@ const ResponsiveSidebar = () => {
                 )}
 
                 {/* Collapse toggle button - desktop only */}
-                <div className="absolute top-24 -right-3 bg-white border border-gray-200 rounded-full p-1 shadow-md hidden md:block" onClick={toggleCollapse}>
+                <button
+                    className="absolute top-24 -right-3 bg-white border border-gray-200 rounded-full p-1 shadow-md hidden md:block"
+                    onClick={toggleCollapse}
+                >
                     {isCollapsed ? (
                         <ChevronRight size={16} className="text-gray-500" />
                     ) : (
                         <ChevronLeft size={16} className="text-gray-500" />
                     )}
-                </div>
+                </button>
             </div>
 
             {/* Main content area */}
-            <Dashboard
-                isCollapsed={isCollapsed}
-                activeItem={activeItem}
-                toggleMobileSidebar={toggleMobileSidebar}
-            ></Dashboard>
+            {renderContent()}
+
         </>
     );
 };
