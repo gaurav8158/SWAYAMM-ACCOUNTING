@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Dashboard from './Dashboard';
 import Account from './Account';
 import Ledger from './Ledger';
+import Narration from './Narration';
 
 const ResponsiveSidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -60,6 +61,12 @@ const ResponsiveSidebar = () => {
                     activeItem={activeItem}
                     toggleMobileSidebar={toggleMobileSidebar}
                 />;
+            case 'narration':
+                return <Narration
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />
             default:
                 return <Dashboard
                     isCollapsed={isCollapsed}
@@ -151,6 +158,17 @@ const ResponsiveSidebar = () => {
                                     <BarChart3 size={20} />
                                 </span>
                                 {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Ledger</span>}
+                            </button>
+                            <button
+                                className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
+                                ${activeItem === 'narration' ? 'bg-white shadow-sm' : 'hover:bg-white hover:shadow-sm'}`}
+                                onClick={(e) => handleMenuClick(e, 'narration')}
+                            >
+                                <span className={`flex items-center justify-center w-10 h-10 rounded-lg
+                                    ${activeItem === 'narration' ? 'bg-blue-100 text-blue-600' : 'text-blue-700'}`}>
+                                    <BarChart3 size={20} />
+                                </span>
+                                {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Narration</span>}
                             </button>
                         </div>
                     </div>
