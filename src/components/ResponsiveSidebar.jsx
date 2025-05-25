@@ -7,6 +7,9 @@ import Dashboard from './Dashboard';
 import Account from './Account';
 import Ledger from './Ledger';
 import Narration from './Narration';
+import Reports from './Reports';
+import AddNewAccount from './AddNewAccount';
+import CashVoucherEntry from './CashVoucherEntry';
 
 const ResponsiveSidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -67,6 +70,23 @@ const ResponsiveSidebar = () => {
                     activeItem={activeItem}
                     toggleMobileSidebar={toggleMobileSidebar}
                 />
+            case 'reports':
+                return <Reports
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />
+            case 'addnewaccount':
+                return <AddNewAccount
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />
+            case 'cashvoucherentry':
+                return <CashVoucherEntry
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar} />
             default:
                 return <Dashboard
                     isCollapsed={isCollapsed}
@@ -169,6 +189,40 @@ const ResponsiveSidebar = () => {
                                     <BarChart3 size={20} />
                                 </span>
                                 {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Narration</span>}
+                            </button>
+                            <button
+                                className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
+                                ${activeItem === 'reports' ? 'bg-white shadow-sm' : 'hover:bg-white hover:shadow-sm'}`}
+                                onClick={(e) => handleMenuClick(e, 'reports')}
+                            >
+                                <span className={`flex items-center justify-center w-10 h-10 rounded-lg
+                                    ${activeItem === 'reports' ? 'bg-blue-100 text-blue-600' : 'text-blue-700'}`}>
+                                    <BarChart3 size={20} />
+                                </span>
+                                {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Reports</span>}
+                            </button>
+
+                            <button
+                                className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
+                                ${activeItem === 'addnewaccount' ? 'bg-white shadow-sm' : 'hover:bg-white hover:shadow-sm'}`}
+                                onClick={(e) => handleMenuClick(e, 'addnewaccount')}
+                            >
+                                <span className={`flex items-center justify-center w-10 h-10 rounded-lg
+                                    ${activeItem === 'addnewaccount' ? 'bg-blue-100 text-blue-600' : 'text-blue-700'}`}>
+                                    <BarChart3 size={20} />
+                                </span>
+                                {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Add New Account</span>}
+                            </button>
+                            <button
+                                className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'px-4'} py-3 rounded-xl transition-all duration-200
+                                ${activeItem === 'cashvoucherentry' ? 'bg-white shadow-sm' : 'hover:bg-white hover:shadow-sm'}`}
+                                onClick={(e) => handleMenuClick(e, 'cashvoucherentry')}
+                            >
+                                <span className={`flex items-center justify-center w-10 h-10 rounded-lg
+                                    ${activeItem === 'cashvoucherentry' ? 'bg-blue-100 text-blue-600' : 'text-blue-700'}`}>
+                                    <BarChart3 size={20} />
+                                </span>
+                                {!isCollapsed && <span className="ml-3 text-gray-700 font-medium">Cash Voucher Entry</span>}
                             </button>
                         </div>
                     </div>

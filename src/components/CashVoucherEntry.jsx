@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
 
-const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
-    const [selectedTranType, setSelectedTranType] = useState('JV');
+
+
+const CashVoucherEntry = ({ isCollapsed = false, activeItem, toggleMobileSidebar = () => { } }) => {
+    // Header fields
+    const [tranType, setTranType] = useState('JV');
     const [cashPayment, setCashPayment] = useState('CASH PAYMENT');
     const [srNo, setSrNo] = useState('9384');
     const [voucherNo, setVoucherNo] = useState('1585');
@@ -14,7 +17,7 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
     const [dateField, setDateField] = useState('');
     const [neField, setNeField] = useState('');
 
-    // Print options state
+    // Print options
     const [printMemo, setPrintMemo] = useState(true);
     const [vide, setVide] = useState(false);
     const [advice, setAdvice] = useState(false);
@@ -23,40 +26,32 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
     const [voucher, setVoucher] = useState(false);
 
     // Debit entries
+    const [debitUniversalCode, setDebitUniversalCode] = useState('');
     const [debitAcCode, setDebitAcCode] = useState('');
     const [debitAcHead, setDebitAcHead] = useState('');
     const [debitAmount, setDebitAmount] = useState('');
-    const [debitUniversalCode, setDebitUniversalCode] = useState('');
     const [debitRefDt, setDebitRefDt] = useState('');
     const [debitRefNo, setDebitRefNo] = useState('');
-    const [debitForFdb, setDebitForFdb] = useState('');
-    const [debitChange, setDebitChange] = useState('');
+    const [debitTotal, setDebitTotal] = useState('');
 
     // Credit entries
+    const [creditUniversalCode, setCreditUniversalCode] = useState('');
     const [creditAcCode, setCreditAcCode] = useState('');
     const [creditAcHead, setCreditAcHead] = useState('');
     const [creditAmount, setCreditAmount] = useState('');
-    const [creditUniversalCode, setCreditUniversalCode] = useState('');
     const [creditRefDt, setCreditRefDt] = useState('');
     const [creditRefNo, setCreditRefNo] = useState('');
-    const [creditForFdb, setCreditForFdb] = useState('');
-    const [creditChange, setCreditChange] = useState('');
-
-    // Totals
-    const [debitTotal, setDebitTotal] = useState('');
     const [creditTotal, setCreditTotal] = useState('');
 
-    // Narration and other fields
+    // Bottom fields
     const [narration, setNarration] = useState('CASH');
     const [cashInHand, setCashInHand] = useState('0');
     const [enclosures, setEnclosures] = useState('');
-    const [responsiblePerson, setResponsiblePerson] = useState('SA');
 
     const pageTitles = {
         dashboard: 'Dashboard',
         account: 'Account Management',
         ledger: 'Financial Ledger',
-        narration: 'Narration',
         cashvoucher: 'Cash Voucher Entry',
     };
 
@@ -112,15 +107,15 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                         </div>
                         <div className='h-0.5 bg-gray-200 mb-6 sm:mb-8'></div>
 
-                        {/* Top Controls */}
+                        {/* Top Controls Row */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-4 sm:mb-6">
                             {/* TRAN. TYPE */}
                             <div>
                                 <label className="block text-gray-700 font-medium mb-2 sm:mb-3 text-sm sm:text-base">TRAN. TYPE</label>
                                 <select
                                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
-                                    value={selectedTranType}
-                                    onChange={(e) => setSelectedTranType(e.target.value)}
+                                    value={tranType}
+                                    onChange={(e) => setTranType(e.target.value)}
                                 >
                                     {tranTypeOptions.map((option) => (
                                         <option key={option.code} value={option.code}>
@@ -135,7 +130,7 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                 <label className="block text-gray-700 font-medium mb-2 sm:mb-3 text-sm sm:text-base">CASH PAYMENT</label>
                                 <input
                                     type="text"
-                                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-black text-sm sm:text-base"
+                                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
                                     value={cashPayment}
                                     onChange={(e) => setCashPayment(e.target.value)}
                                 />
@@ -146,7 +141,7 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                 <label className="block text-gray-700 font-medium mb-2 sm:mb-3 text-sm sm:text-base">SR NO.</label>
                                 <input
                                     type="text"
-                                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-black text-sm sm:text-base"
+                                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
                                     value={srNo}
                                     onChange={(e) => setSrNo(e.target.value)}
                                 />
@@ -157,7 +152,7 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                 <label className="block text-gray-700 font-medium mb-2 sm:mb-3 text-sm sm:text-base">VOUCHER NO.</label>
                                 <input
                                     type="text"
-                                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-black text-sm sm:text-base"
+                                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
                                     value={voucherNo}
                                     onChange={(e) => setVoucherNo(e.target.value)}
                                 />
@@ -233,7 +228,7 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                             </div>
                         </div>
 
-                        {/* Additional Controls */}
+                        {/* Second Row Controls */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6 mb-4 sm:mb-6">
                             {/* VT. DT */}
                             <div>
@@ -373,9 +368,9 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                     </div>
                 </div>
 
-                {/* Debit Entries Section */}
+                {/* DR (Debit) Section */}
                 <div className='p-6 sm:px-4 md:px-6 py-1'>
-                    <div className="bg-white rounded-lg p-3 sm:p-6 md:p-8">
+                    <div className="bg-white rounded-lg shadow-sm p-3 sm:p-6 md:p-8">
                         <div className="flex justify-between items-center mb-4 sm:mb-6">
                             <h2 className="text-lg sm:text-xl font-medium text-gray-800">DR</h2>
                             <div className="flex gap-8">
@@ -389,15 +384,6 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                             </div>
                         </div>
                         <div className="h-px bg-gray-200 mb-6 sm:mb-8"></div>
-
-                        {/* Headers */}
-                        <div className="grid grid-cols-1 sm:grid-cols-8 gap-2 mb-4 text-sm font-medium text-gray-700 border-b pb-2">
-                            <div className="sm:col-span-2">A/C CODE</div>
-                            <div className="sm:col-span-3">A/C HEAD</div>
-                            <div className="sm:col-span-1">AMOUNT</div>
-                            <div className="sm:col-span-1">REF. DT.</div>
-                            <div className="sm:col-span-1">REF. NO.</div>
-                        </div>
 
                         {/* Universal Code */}
                         <div className="mb-4 sm:mb-6">
@@ -438,12 +424,23 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                             </div>
                         </div>
 
+                        {/* Account Entry Headers */}
+                        <div className="grid grid-cols-1 sm:grid-cols-9 gap-2 mb-4 text-sm font-medium text-gray-700 border-b pb-2">
+                            <div className="sm:col-span-1">S.NO</div>
+                            <div className="sm:col-span-2">A/C CODE</div>
+                            <div className="sm:col-span-2">A/C HEAD</div>
+                            <div className="sm:col-span-1">AMOUNT</div>
+                            <div className="sm:col-span-1">REF. DT.</div>
+                            <div className="sm:col-span-1">REF. NO.</div>
+                            <div className="sm:col-span-1">For FDR CHANGE</div>
+                        </div>
+
                         {/* Account Entries */}
                         <div className="mb-4 sm:mb-6">
                             {/* Mobile Layout */}
                             <div className="block sm:hidden">
                                 <div className="mb-3">
-                                    <label className="block text-gray-700 font-medium mb-2 text-sm">S. NO / A/C CODE</label>
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">A/C CODE</label>
                                     <input
                                         className='w-full bg-white border border-gray-300 rounded-xl text-black p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 font-medium'
                                         placeholder='Enter Code'
@@ -452,15 +449,15 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="block text-gray-700 font-medium mb-2 text-sm">A/C NAME</label>
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">A/C HEAD</label>
                                     <input
                                         className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                                        placeholder='Enter Name'
+                                        placeholder='Enter Head'
                                         value={debitAcHead}
                                         onChange={(e) => setDebitAcHead(e.target.value)}
                                     />
                                 </div>
-                                <div className="mb-4">
+                                <div className="mb-3">
                                     <label className="block text-gray-700 font-medium mb-2 text-sm">AMOUNT</label>
                                     <input
                                         className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
@@ -469,40 +466,63 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                         onChange={(e) => setDebitAmount(e.target.value)}
                                     />
                                 </div>
+                                <div className="mb-3">
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">REF. DT.</label>
+                                    <input
+                                        className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Enter Date'
+                                        value={debitRefDt}
+                                        onChange={(e) => setDebitRefDt(e.target.value)}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">REF. NO.</label>
+                                    <input
+                                        className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Enter Ref No'
+                                        value={debitRefNo}
+                                        onChange={(e) => setDebitRefNo(e.target.value)}
+                                    />
+                                </div>
                             </div>
 
                             {/* Desktop Layout */}
                             <div className="hidden sm:block">
-                                <div className="mb-4 sm:mb-6">
-                                    <div className="grid grid-cols-8 gap-2 sm:gap-3 mb-2">
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-1">S. NO</label>
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-2">A/C CODE</label>
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-3">A/C NAME</label>
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-2">AMOUNT</label>
+                                <div className='grid grid-cols-9 gap-3 sm:gap-4 items-center'>
+                                    <div className="col-span-1">
+                                        <span className="text-sm text-gray-600">1</span>
                                     </div>
-                                    <div className='grid grid-cols-8 gap-3 sm:gap-4 items-center'>
-                                        <div className="col-span-1">
-                                            <span className="text-sm text-gray-600">1</span>
-                                        </div>
-                                        <input
-                                            className='col-span-2 bg-white border border-gray-300 rounded-xl text-black p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 font-medium'
-                                            placeholder='Enter Code'
-                                            value={debitAcCode}
-                                            onChange={(e) => setDebitAcCode(e.target.value)}
-                                        />
-                                        <input
-                                            className='col-span-3 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                                            placeholder='Enter Name'
-                                            value={debitAcHead}
-                                            onChange={(e) => setDebitAcHead(e.target.value)}
-                                        />
-                                        <input
-                                            className='col-span-2 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                                            placeholder='Amount'
-                                            value={debitAmount}
-                                            onChange={(e) => setDebitAmount(e.target.value)}
-                                        />
-                                    </div>
+                                    <input
+                                        className='col-span-2 bg-white border border-gray-300 rounded-xl text-black p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 font-medium'
+                                        placeholder='Enter Code'
+                                        value={debitAcCode}
+                                        onChange={(e) => setDebitAcCode(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-2 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Enter Head'
+                                        value={debitAcHead}
+                                        onChange={(e) => setDebitAcHead(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-1 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Amount'
+                                        value={debitAmount}
+                                        onChange={(e) => setDebitAmount(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-1 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Ref. Dt.'
+                                        value={debitRefDt}
+                                        onChange={(e) => setDebitRefDt(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-1 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Ref. No.'
+                                        value={debitRefNo}
+                                        onChange={(e) => setDebitRefNo(e.target.value)}
+                                    />
+                                    <div className="col-span-1 bg-gray-100 border border-gray-300 h-12 rounded-xl"></div>
                                 </div>
                             </div>
                         </div>
@@ -537,9 +557,9 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                     </div>
                 </div>
 
-                {/* Credit Entries Section */}
+                {/* CR (Credit) Section */}
                 <div className='p-6 sm:px-4 md:px-6 py-1'>
-                    <div className="bg-white rounded-lg p-3 sm:p-6 md:p-8">
+                    <div className="bg-white rounded-lg shadow-sm p-3 sm:p-6 md:p-8">
                         <div className="flex justify-between items-center mb-4 sm:mb-6">
                             <h2 className="text-lg sm:text-xl font-medium text-gray-800">CR</h2>
                             <div className="flex gap-8">
@@ -593,12 +613,23 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                             </div>
                         </div>
 
+                        {/* Account Entry Headers */}
+                        <div className="grid grid-cols-1 sm:grid-cols-9 gap-2 mb-4 text-sm font-medium text-gray-700 border-b pb-2">
+                            <div className="sm:col-span-1">S.NO</div>
+                            <div className="sm:col-span-2">A/C CODE</div>
+                            <div className="sm:col-span-2">A/C HEAD</div>
+                            <div className="sm:col-span-1">AMOUNT</div>
+                            <div className="sm:col-span-1">REF. DT.</div>
+                            <div className="sm:col-span-1">REF. NO.</div>
+                            <div className="sm:col-span-1">CHANGE</div>
+                        </div>
+
                         {/* Account Entries */}
                         <div className="mb-4 sm:mb-6">
                             {/* Mobile Layout */}
                             <div className="block sm:hidden">
                                 <div className="mb-3">
-                                    <label className="block text-gray-700 font-medium mb-2 text-sm">S. NO / A/C CODE</label>
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">A/C CODE</label>
                                     <input
                                         className='w-full bg-white border border-gray-300 rounded-xl text-black p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 font-medium'
                                         placeholder='Enter Code'
@@ -607,15 +638,15 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="block text-gray-700 font-medium mb-2 text-sm">A/C NAME</label>
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">A/C HEAD</label>
                                     <input
                                         className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                                        placeholder='Enter Name'
+                                        placeholder='Enter Head'
                                         value={creditAcHead}
                                         onChange={(e) => setCreditAcHead(e.target.value)}
                                     />
                                 </div>
-                                <div className="mb-4">
+                                <div className="mb-3">
                                     <label className="block text-gray-700 font-medium mb-2 text-sm">AMOUNT</label>
                                     <input
                                         className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
@@ -624,40 +655,63 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                         onChange={(e) => setCreditAmount(e.target.value)}
                                     />
                                 </div>
+                                <div className="mb-3">
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">REF. DT.</label>
+                                    <input
+                                        className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Enter Date'
+                                        value={creditRefDt}
+                                        onChange={(e) => setCreditRefDt(e.target.value)}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 font-medium mb-2 text-sm">REF. NO.</label>
+                                    <input
+                                        className='w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Enter Ref No'
+                                        value={creditRefNo}
+                                        onChange={(e) => setCreditRefNo(e.target.value)}
+                                    />
+                                </div>
                             </div>
 
                             {/* Desktop Layout */}
                             <div className="hidden sm:block">
-                                <div className="mb-4 sm:mb-6">
-                                    <div className="grid grid-cols-8 gap-2 sm:gap-3 mb-2">
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-1">S. NO</label>
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-2">A/C CODE</label>
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-3">A/C NAME</label>
-                                        <label className="block text-gray-700 font-medium text-sm sm:text-base col-span-2">AMOUNT</label>
+                                <div className='grid grid-cols-9 gap-3 sm:gap-4 items-center'>
+                                    <div className="col-span-1">
+                                        <span className="text-sm text-gray-600">1</span>
                                     </div>
-                                    <div className='grid grid-cols-8 gap-3 sm:gap-4 items-center'>
-                                        <div className="col-span-1">
-                                            <span className="text-sm text-gray-600">1</span>
-                                        </div>
-                                        <input
-                                            className='col-span-2 bg-white border border-gray-300 rounded-xl text-black p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 font-medium'
-                                            placeholder='Enter Code'
-                                            value={creditAcCode}
-                                            onChange={(e) => setCreditAcCode(e.target.value)}
-                                        />
-                                        <input
-                                            className='col-span-3 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                                            placeholder='Enter Name'
-                                            value={creditAcHead}
-                                            onChange={(e) => setCreditAcHead(e.target.value)}
-                                        />
-                                        <input
-                                            className='col-span-2 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
-                                            placeholder='Amount'
-                                            value={creditAmount}
-                                            onChange={(e) => setCreditAmount(e.target.value)}
-                                        />
-                                    </div>
+                                    <input
+                                        className='col-span-2 bg-white border border-gray-300 rounded-xl text-black p-3 focus:outline-none focus:ring-2 focus:ring-blue-300 font-medium'
+                                        placeholder='Enter Code'
+                                        value={creditAcCode}
+                                        onChange={(e) => setCreditAcCode(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-2 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Enter Head'
+                                        value={creditAcHead}
+                                        onChange={(e) => setCreditAcHead(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-1 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Amount'
+                                        value={creditAmount}
+                                        onChange={(e) => setCreditAmount(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-1 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Ref. Dt.'
+                                        value={creditRefDt}
+                                        onChange={(e) => setCreditRefDt(e.target.value)}
+                                    />
+                                    <input
+                                        className='col-span-1 bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                                        placeholder='Ref. No.'
+                                        value={creditRefNo}
+                                        onChange={(e) => setCreditRefNo(e.target.value)}
+                                    />
+                                    <div className="col-span-1 bg-gray-100 border border-gray-300 h-12 rounded-xl"></div>
                                 </div>
                             </div>
                         </div>
@@ -694,7 +748,7 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
 
                 {/* Bottom Section - Narration */}
                 <div className='p-6 sm:px-4 md:px-6 py-1 pb-5'>
-                    <div className="bg-white rounded-lg p-3 sm:p-6 md:p-8">
+                    <div className="bg-white rounded-lg shadow-sm p-3 sm:p-6 md:p-8">
                         <h2 className="text-lg sm:text-xl font-medium text-gray-800 mb-4 sm:mb-6">Narration</h2>
                         <div className="h-px bg-gray-200 mb-6 sm:mb-8"></div>
 
@@ -732,18 +786,6 @@ const CashVoucherEntry = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                                     />
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Responsible Person Section */}
-                        <div className="flex items-center gap-4 mb-8 sm:mb-12">
-                            <label className="text-gray-700 font-medium text-sm sm:text-base">RESPONSIBLE PERSON:</label>
-                            <input
-                                type="text"
-                                className="w-16 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
-                                value={responsiblePerson}
-                                onChange={(e) => setResponsiblePerson(e.target.value)}
-                            />
-                            <span className="text-gray-700 font-medium text-sm sm:text-base">SYSTEM ADMINISTRATOR</span>
                         </div>
 
                         {/* Action Buttons */}
