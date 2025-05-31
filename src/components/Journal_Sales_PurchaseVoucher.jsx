@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
 
-const CashVoucherEntry = ({ isCollapsed = false, activeItem, toggleMobileSidebar = () => { } }) => {
+const Journal_Sales_PurchaseVoucher = ({ isCollapsed = false, activeItem, toggleMobileSidebar = () => { } }) => {
     // Header fields
     const [tranType, setTranType] = useState('JV');
     const [cashPayment, setCashPayment] = useState('CASH PAYMENT');
@@ -124,7 +124,7 @@ const CashVoucherEntry = ({ isCollapsed = false, activeItem, toggleMobileSidebar
                                 <h3 className="text-lg font-bold text-gray-800 underline">BUDAUN</h3>
 
                             </div>
-                            <h1 className="text-xl font-bold text-gray-800 underline mb-4 sm:mb-6">CASH VOUCHER ENTRY</h1>
+                            <h1 className="text-xl font-bold text-gray-800 underline mb-4 sm:mb-6">Journal/Sales/Purchase Voucher Entry</h1>
                         </div>
                         <div className='h-0.5 bg-gray-200 mb-4 sm:mb-6'></div>
 
@@ -718,4 +718,4 @@ const CashVoucherEntry = ({ isCollapsed = false, activeItem, toggleMobileSidebar
     )
 }
 
-export default CashVoucherEntry
+export default Journal_Sales_PurchaseVoucher
