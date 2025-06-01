@@ -18,6 +18,9 @@ import Journal_Sales_PurchaseVoucher from './Journal_Sales_PurchaseVoucher';
 import Journal_Sales_PurchaseVoucherBackDate from './Journal_Sales_PurchaseVoucherBackDate';
 import IncompleteVoucherduetoPowerFailure from './IncompleteVoucherduetoPowerFailure';
 import IncompleteVoucherEntryBackDate from './IncompleteVoucherEntryBackDate';
+import BankStatementEntry from './BankStatementEntry';
+import TdsRegister from './TdsRegister';
+import TdsChallanEntry from './TdsChallanEntry';
 
 const ResponsiveSidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -228,9 +231,19 @@ const ResponsiveSidebar = () => {
                     toggleMobileSidebar={toggleMobileSidebar}
                 />
             case 'teBankStatement':
+                return <BankStatementEntry
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />
             case 'teTdsRegister':
+                return <TdsRegister
+                    isCollapsed={isCollapsed}
+                    activeItem={activeItem}
+                    toggleMobileSidebar={toggleMobileSidebar}
+                />
             case 'teTdsChallanEntry':
-                return <Dashboard
+                return <TdsChallanEntry
                     isCollapsed={isCollapsed}
                     activeItem={activeItem}
                     toggleMobileSidebar={toggleMobileSidebar}
