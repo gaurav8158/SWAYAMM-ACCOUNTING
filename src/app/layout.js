@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ResponsiveSidebar></ResponsiveSidebar>
+        {/* <ResponsiveSidebar></ResponsiveSidebar> */}
         {children}
       </body>
     </html>

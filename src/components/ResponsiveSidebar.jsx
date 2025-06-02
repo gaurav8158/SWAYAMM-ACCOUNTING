@@ -709,7 +709,7 @@ const ResponsiveSidebar = () => {
                 </div>
 
                 {/* Help section with gradient */}
-                <div className="p-3 mt-auto">
+                {/* <div className="p-3 mt-auto">
                     <div className="rounded-2xl overflow-hidden bg-gradient-to-r from-blue-400 to-blue-600 text-white p-4">
                         <div className="flex items-center mb-2">
                             <div className="bg-white p-2 rounded-lg">
@@ -728,14 +728,14 @@ const ResponsiveSidebar = () => {
                     </div>
                 </div>
 
-                {/* Upgrade to Pro button */}
+               
                 {!isCollapsed && (
                     <div className="p-3 border-t border-gray-200">
                         <button className="w-full py-3 bg-blue-500 text-white rounded-xl font-medium transform transition-all duration-300 hover:scale-105 hover:bg-blue-600 shadow-sm">
                             UPGRADE TO PRO
                         </button>
                     </div>
-                )}
+                )} */}
 
                 {/* Collapse toggle button - desktop only */}
                 <button
