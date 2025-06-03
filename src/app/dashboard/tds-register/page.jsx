@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 
@@ -57,7 +57,7 @@ const page = ({
   };
 
   return (
-      <div className="h-screen overflow-y-auto ">
+    <div className="h-screen overflow-y-auto ">
       <div className="transition-all  duration-300 ease-in-out bg-[#EEEEF1]">
         <Navbar
           pageTitle={pageTitles.tdsregister}
@@ -84,8 +84,7 @@ const page = ({
 
             {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 items-center">
-              {/* Sr No */}
-              <div>
+              <div className="sm:col-span-2">
                 <label className="block text-gray-700 font-medium mb-2 text-sm">
                   Sr No
                 </label>
@@ -98,13 +97,13 @@ const page = ({
               </div>
 
               {/* Date */}
-              <div className="md:col-span-3 flex items-center gap-4">
-                <label className="block text-gray-700 font-medium text-sm">
+              <div className="sm:col-span-2">
+                <label className="block text-gray-700 font-medium mb-2 text-sm">
                   Date
                 </label>
                 <input
                   type="text"
-                  className="flex-grow px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                 />

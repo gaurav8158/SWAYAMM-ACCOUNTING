@@ -76,10 +76,7 @@ const page = () => {
   return (
     <div className="h-screen overflow-y-auto ">
       <div className={`transition-all  duration-300 ease-in-out bg-[#EEEEF1]`}>
-        <Navbar
-          pageTitle={pageTitles.reports}
-        
-        />
+        <Navbar pageTitle={pageTitles.reports} />
 
         {/* Main Reports Container */}
         <div className="p-6 sm:px-4 md:px-6 py-4">
@@ -165,7 +162,7 @@ const page = () => {
                     className="flex flex-col items-center justify-center gap-2 p-4 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
-                      <Cpu strokeWidth={1.5}  className="w-5 h-5 text-white" />
+                      <Cpu strokeWidth={1.5} className="w-5 h-5 text-white" />
                     </div>
                     <span className="text-sm font-medium text-gray-700">
                       Process
@@ -177,7 +174,7 @@ const page = () => {
                     className="flex flex-col items-center justify-center gap-2 p-4 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <div className="w-8 h-8 bg-yellow-500 rounded flex items-center justify-center">
-                      <X  strokeWidth={1.5} className="text-white" />
+                      <X strokeWidth={1.5} className="text-white" />
                     </div>
                     <span className="text-sm font-medium text-gray-700">
                       Close

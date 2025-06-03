@@ -88,52 +88,6 @@ const page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
             </div>
           </div>
 
-          <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-6">
-            <div className="md:h-60 w-full bg-white shadow-lg rounded-xl md:col-span-5 flex flex-col md:flex-row">
-              <div className=" flex flex-col justify-between h-full gap-5 p-5">
-                <div className="flex flex-col gap-2">
-                  <p className="text-gray-400 font-semibold md:text-xl">
-                    Build by developers
-                  </p>
-                  <p className="text-black font-bold text-2xl">
-                    Soft UI Dashboard
-                  </p>
-                  <p className="md:text-xl text-gray-500 line-clamp-4">
-                    From colors, cards, typography to complex elements, you will
-                    find the full documentation.
-                  </p>
-                </div>
-                <div className="text-gray-500  flex">
-                  <p>Read More</p>
-                  <ArrowRight className="transform transition duration-300 hover:translate-x-1" />
-                </div>
-              </div>
-              <div className="shadow-lg rounded-xl h-[90%] md:m-auto md:mr-3 md:w-100 mx-4 md:mx-0 mb-4 bg-blue-500">
-                <img
-                  src={"/img/rocket.png"}
-                  alt="rocket"
-                  className="md:h-40 md:w-50 m-auto mt-8 m-2"
-                ></img>
-              </div>
-            </div>
-            <div className="h-60 rounded-xl shadow-lg w-full bg-white md:col-span-3 p-3">
-              <div className="relative h-full rounded-xl  overflow-hidden">
-                <div className='absolute inset-0 bg-[url("/img/cardbg.jpg")] bg-cover h-full rounded-xl shadow-lg w-full text-white brightness-50 flex flex-col p-3 justify-between'></div>
-                <div className="relative z-10 flex flex-col justify-between h-full p-5">
-                  <p className="md:text-2xl font-bold">Work with the rockets</p>
-                  <p className="md:text-xl">
-                    Wealth creation is an evolutionarily recent positive-sum
-                    game. It is all about who take the opportunity first.
-                  </p>
-                  <div className="md:text-xl flex">
-                    <p>Read More</p>
-                    <ArrowRight className="transform transition duration-300 hover:translate-x-1" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="grid w-full grid-cols-1 md:grid-cols-7 gap-6 mt-6">
             <div className="md:col-span-3 h-full w-full bg-white shadow-lg rounded-xl">
               <div className="m-3">

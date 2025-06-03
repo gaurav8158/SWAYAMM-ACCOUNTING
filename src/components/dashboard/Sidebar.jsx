@@ -32,11 +32,7 @@ const transactionSubMenuItems = [
     label: "Bank Voucher",
     path: "/dashboard/bank-voucher",
   },
-  {
-    id: "teBankVoucherMultiEntry",
-    label: "Bank Voucher (Multi Entry)",
-    path: "/dashboard/bank-voucher-multi-entry",
-  },
+
   {
     id: "teBankVoucherBackDate",
     label: "Bank Voucher BackDate",
@@ -52,16 +48,7 @@ const transactionSubMenuItems = [
     label: "Journal/Sales/Purchase Voucher BackDate",
     path: "/dashboard/sales-voucher-backdate",
   },
-  {
-    id: "teIncompleteVoucherPowerFailure",
-    label: "Incomplete Voucher (Power Failure)",
-    path: "/dashboard/incomplete-voucher-power-failure",
-  },
-  {
-    id: "teIncompleteVoucherBackDate",
-    label: "Incomplete Voucher (Back Date)",
-    path: "/dashboard/incomplete-voucher-back-date",
-  },
+
   {
     id: "teBankStatement",
     label: "Bank Statement",
@@ -113,6 +100,54 @@ const reportsItems = [
   },
   { id: "teCashFlow", label: "Cash Flow", path: "/dashboard/cash-flow" },
   { id: "teMISReport", label: "MIS Report", path: "/dashboard/mis-report" },
+];
+const dashboardItems = [
+  { id: "teAccounts", label: "Accounts", path: "/dashboard/accounts" },
+  { id: "teBank", label: "Bank", path: "/dashboard/bank" },
+  { id: "teBankSeries", label: "Bank Series", path: "/dashboard/bank-series" },
+  {
+    id: "teCustomerVendor",
+    label: "Customer/Vendor",
+    path: "/dashboard/customer-vendor",
+  },
+  {
+    id: "teCustomerVendorType",
+    label: "Customer/Vendor Type",
+    path: "/dashboard/customer-vendor-type",
+  },
+  {
+    id: "teCustomerVendorClass",
+    label: "Customer/Vendor Class",
+    path: "/dashboard/customer-vendor-class",
+  },
+  {
+    id: "teBalanceSheet",
+    label: "Balance Sheet",
+    path: "/dashboard/balance-sheet",
+  },
+  { id: "teCashFlow", label: "Cash Flow", path: "/dashboard/cash-flow" },
+  { id: "teCostCentre", label: "Cost Centre", path: "/dashboard/cost-centre" },
+  {
+    id: "teProfitLoss",
+    label: "Profit & Loss",
+    path: "/dashboard/profit-loss",
+  },
+  {
+    id: "teCostOfProduction",
+    label: "Cost of Production",
+    path: "/dashboard/cost-of-production",
+  },
+  { id: "teLedger", label: "Ledger", path: "/dashboard/ledger" },
+  {
+    id: "teResponsiblePerson",
+    label: "Responsible Person",
+    path: "/dashboard/responsible-person",
+  },
+  {
+    id: "teNarrationCategory",
+    label: "Narration Category",
+    path: "/dashboard/narration-category",
+  },
 ];
 
 const Sidebar = () => {
@@ -187,7 +222,7 @@ const Sidebar = () => {
     <>
       <button
         onClick={toggleMobileSidebar}
-        className="sm:hidden group absolute top-8 left-8 flex items-center justify-center p-2 text-gray-600 hover:text-white bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-500 hover:to-gray-600 rounded-md shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 border border-gray-200 hover:border-transparent mr-3"
+        className="sm:hidden z-50 group absolute top-10 left-8 flex items-center justify-center p-2 text-gray-600 hover:text-white bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-500 hover:to-gray-600 rounded-md shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 border border-gray-200 hover:border-transparent mr-3"
       >
         <Text size={16} className="transition-transform duration-200" />
       </button>
@@ -325,7 +360,7 @@ const Sidebar = () => {
             </div>
           </div>
 
-          {/* Master section */}
+          {/* Master Entry section */}
           <div className="pt-2">
             <h2
               className={`text-xs font-semibold text-gray-500 mb-3 ${
@@ -335,30 +370,30 @@ const Sidebar = () => {
               MASTER
             </h2>
             <div className="space-y-2">
-              {/* Master main item (clickable to expand/collapse) */}
+              {/* Transaction Entry main item (clickable to expand/collapse) */}
               <button
                 className={`w-full flex items-center ${
                   isCollapsed ? "justify-center" : "px-4"
                 } py-3 rounded-xl transition-all duration-200
-                                ${
-                                  expandedSections.master
-                                    ? "bg-white shadow-sm"
-                                    : "hover:bg-white hover:shadow-sm"
-                                }`}
+                      ${
+                        expandedSections.transactionEntry
+                          ? "bg-white shadow-sm"
+                          : "hover:bg-white hover:shadow-sm"
+                      }`}
                 onClick={(e) => handleMenuClick(e, "master")}
               >
                 <span
                   className={`flex items-center justify-center w-10 h-10 rounded-lg
-                                    ${
-                                      expandedSections.master
-                                        ? "bg-blue-100 text-blue-600"
-                                        : "text-blue-700"
-                                    }`}
+                          ${
+                            expandedSections.master
+                              ? "bg-blue-100 text-blue-600"
+                              : "text-blue-700"
+                          }`}
                 >
                   <BarChart3 size={20} />
                 </span>
                 {!isCollapsed && (
-                  <span className="ml-3 text-gray-700 font-medium">Master</span>
+                  <span className="ml-3 text-gray-700 font-medium">MASTER</span>
                 )}
                 {!isCollapsed && (
                   <span className="ml-auto">
@@ -371,237 +406,31 @@ const Sidebar = () => {
                   </span>
                 )}
               </button>
-              {/* Master submenus */}
+
+              {/* Transaction Entry submenus - Rendered from array */}
               {expandedSections.master && !isCollapsed && (
                 <div className="ml-1 mt-2 space-y-2">
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterAccounts"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterAccounts")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">Accounts</span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master === "masterBank"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterBank")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">Bank</span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterBankSeries"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterBankSeries")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Bank Series
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterCustomerVendor"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterCustomerVendor")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Customer/Vendor
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterCustomerVendorType"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(
-                        e,
-                        "master",
-                        "masterCustomerVendorType"
-                      )
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Customer/Vendor Type
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterCustomerVendorClass"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(
-                        e,
-                        "master",
-                        "masterCustomerVendorClass"
-                      )
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Customer/Vendor Class
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterBalanceSheet"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterBalanceSheet")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Balance Sheet
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterCashFlow"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterCashFlow")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">Cash Flow</span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterCostCentre"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterCostCentre")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Cost Centre
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterProfitAndLoss"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterProfitAndLoss")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Profit & Loss
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterCostOfProduction"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterCostOfProduction")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Cost of Production
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterLedger"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterLedger")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">Ledger</span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterResponsiblePerson"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterResponsiblePerson")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Responsible Person
-                    </span>
-                  </button>
-                  <button
-                    className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200
-                                        ${
-                                          activeSubItem.master ===
-                                          "masterNarrationCategory"
-                                            ? "bg-blue-50 text-blue-600"
-                                            : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                                        }`}
-                    onClick={(e) =>
-                      handleSubMenuClick(e, "master", "masterNarrationCategory")
-                    }
-                  >
-                    <span className="ml-3 text-sm font-medium">
-                      Narration Category
-                    </span>
-                  </button>
+                  {dashboardItems.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={item.path}
+                      onClick={() => setIsMobileOpen(false)}
+                      className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200 
+              ${
+                activeSubItem.master === item.id
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+              }`}
+                    >
+                      <span className="ml-3 text-sm font-medium">
+                        {item.label}
+                      </span>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
           </div>
-
           {/* Transaction Entry section */}
           <div className="pt-2">
             <h2
