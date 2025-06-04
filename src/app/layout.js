@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { Inter } from 'next/font/google';
 import "./globals.css";
 import ResponsiveSidebar from "@/components/ResponsiveSidebar"
@@ -6,7 +6,12 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // add weights as needed
+  variable: "--font-poppins",
+  display: "swap",
+});
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -25,11 +30,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-         <link rel="icon" href="/logo.svg" type="image/svg" />
-         
+        <link rel="icon" href="/logo.svg" type="image/svg" />
+
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
         {/* <ResponsiveSidebar></ResponsiveSidebar> */}
         {children}

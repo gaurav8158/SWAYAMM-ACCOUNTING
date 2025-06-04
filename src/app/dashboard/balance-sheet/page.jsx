@@ -14,17 +14,17 @@ import {
 import Navbar from "@/components/Navbar";
 import Cardheader from "@/components/dashboard/Cardheader";
 
-const page = () => {
+const BalanceSheetMaster = () => {
   const [formData, setFormData] = useState({
-    profitLossCode: "B2",
-    profitLossName: "CONTRACTOR RETENTION MONEY",
-    dateOfOpening: "7/18/2016",
+    balanceSheetCode: "A",
+    balanceSheetName: "EQUITY & LIABILITIES",
+    dateOfOpening: "7/18/2016 12:34:2",
     acCode: "NE",
     personResponsible: "SA",
   });
 
   const [currentRecord, setCurrentRecord] = useState(1);
-  const totalRecords = 342;
+  const totalRecords = 295;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +54,7 @@ const page = () => {
   return (
     <div className="h-screen overflow-y-auto">
       <div className="transition-all duration-300 ease-in-out bg-gray-100">
-        <Navbar pageTitle="LEDGER MASTER" />
+        <Navbar pageTitle="BALANCE SHEET" />
 
         <div className="p-6 sm:px-4 md:px-6 py-1">
           <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 md:p-6">
@@ -63,25 +63,31 @@ const page = () => {
 
             {/* Form Fields with Modern Design */}
             <div className="space-y-6">
-              {/*  Ledger*/}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
-                <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                 Ledger
-                </label>
-                <div className="sm:col-span-2 flex gap-3 items-center">
+              {/* Balance Sheet Code and Name */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="block text-gray-700 font-medium text-sm sm:text-base">
+                    Balance Sheet Code
+                  </label>
                   <input
                     type="text"
-                    name="profitLossCode"
-                    value={formData.profitLossCode}
+                    name="balanceSheetCode"
+                    value={formData.balanceSheetCode}
                     onChange={handleInputChange}
-                    className="w-20 custom-input"
+                    className="w-full custom-input"
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-gray-700 font-medium text-sm sm:text-base">
+                    Balance Sheet Name
+                  </label>
                   <input
                     type="text"
-                    name="profitLossName"
-                    value={formData.profitLossName}
+                    name="balanceSheetName"
+                    value={formData.balanceSheetName}
                     onChange={handleInputChange}
-                    className="flex-1 custom-input"
+                    className="w-full custom-input"
                   />
                 </div>
               </div>
@@ -101,7 +107,18 @@ const page = () => {
                   />
                 </div>
 
-           
+                <div className="space-y-2">
+                  <label className="block text-gray-700 font-medium text-sm sm:text-base">
+                    A/C Code
+                  </label>
+                  <input
+                    type="text"
+                    name="acCode"
+                    value={formData.acCode}
+                    onChange={handleInputChange}
+                    className="w-full custom-input"
+                  />
+                </div>
               </div>
 
               {/* Entered By Section */}
@@ -137,27 +154,27 @@ const page = () => {
               <div className="grid grid-cols-5 gap-2 sm:gap-4 w-full">
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <CircleFadingPlus className="text-xl" />
-                  <span className="block text-xs sm:text-base">Add</span>
+                  <span className="block text-xs sm:text-base">ADD</span>
                 </button>
 
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <Edit3 className="text-xl" />
-                  <span className="block text-xs sm:text-base">Edit</span>
+                  <span className="block text-xs sm:text-base">EDIT</span>
                 </button>
 
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-green-600 border border-green-600 hover:bg-green-50 px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 bg-white">
                   <Search className="text-xl" />
-                  <span className="block text-xs sm:text-base">Find</span>
+                  <span className="block text-xs sm:text-base">FIND</span>
                 </button>
 
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <Ban className="text-xl" />
-                  <span className="block text-xs sm:text-base">Cancel</span>
+                  <span className="block text-xs sm:text-base">CANCEL</span>
                 </button>
 
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <CircleX className="text-xl" />
-                  <span className="block text-xs sm:text-base">Close</span>
+                  <span className="block text-xs sm:text-base">CLOSE</span>
                 </button>
               </div>
             </div>
@@ -168,4 +185,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default BalanceSheetMaster;

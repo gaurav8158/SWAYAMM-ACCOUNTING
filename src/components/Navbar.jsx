@@ -381,7 +381,7 @@ const Navbar = ({ pageTitle = "Dashboard" }) => {
   const isNotDashboard = pageTitle !== "Dashboard";
 
   return (
-    <div className=" bg-[#EEEEF1] p-6 sm:p-4 md:p-6 min-w-0">
+    <div className=" bg-[#EEEEF1] font-poppins p-6 sm:p-4 md:p-6 min-w-0">
       {/* Main Navbar Container */}
       <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-lg border border-gray-100 p-4 lg:p-6 min-w-0">
         {/* Main Navigation Row */}
@@ -399,13 +399,13 @@ const Navbar = ({ pageTitle = "Dashboard" }) => {
                   <span>Home</span>
                 </div>
                 <ChevronRight size={10} className="mx-2 text-gray-400" />
-                <div className="hover:text-blue-600 truncate cursor-pointer transition-colors duration-200">
+                <div className="font-poppins hover:text-blue-600 truncate cursor-pointer transition-colors duration-200">
                   {pageTitle}
                 </div>
               </div>
 
               {/* Page Title */}
-              <h1 className="text-lg md:text-xl lg:text-2xl text-gray-900 font-bold truncate ml-10 sm:ml-0">
+              <h1 className="font-poppins text-lg md:text-xl lg:text-2xl text-gray-900 font-bold truncate ml-10 sm:ml-0">
                 {pageTitle}
               </h1>
             </div>

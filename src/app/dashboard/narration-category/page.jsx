@@ -54,7 +54,7 @@ const page = () => {
   return (
     <div className="h-screen overflow-y-auto">
       <div className="transition-all duration-300 ease-in-out bg-gray-100">
-        <Navbar pageTitle="LEDGER MASTER" />
+        <Navbar pageTitle="NARRATION CATEGORY MASTER" />
 
         <div className="p-6 sm:px-4 md:px-6 py-1">
           <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 md:p-6">
@@ -63,71 +63,20 @@ const page = () => {
 
             {/* Form Fields with Modern Design */}
             <div className="space-y-6">
-              {/*  Ledger*/}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+              {/*  NARRATION CATEGORY */}
+              <div className="flex flex-col gap-2">
                 <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                 Ledger
+                  Naration Category
                 </label>
-                <div className="sm:col-span-2 flex gap-3 items-center">
-                  <input
-                    type="text"
-                    name="profitLossCode"
-                    value={formData.profitLossCode}
-                    onChange={handleInputChange}
-                    className="w-20 custom-input"
-                  />
+              
                   <input
                     type="text"
                     name="profitLossName"
                     value={formData.profitLossName}
                     onChange={handleInputChange}
-                    className="flex-1 custom-input"
-                  />
-                </div>
-              </div>
-
-              {/* Date of Opening and A/C Code */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                    Date of Opening
-                  </label>
-                  <input
-                    type="text"
-                    name="dateOfOpening"
-                    value={formData.dateOfOpening}
-                    onChange={handleInputChange}
                     className="w-full custom-input"
                   />
-                </div>
-
-           
-              </div>
-
-              {/* Entered By Section */}
-              <div>
-                <p className="block text-gray-700 font-medium text-sm lg:text-base">
-                  Entered By
-                </p>
-
-                {/* Person Responsible */}
-                <div className="mt-2 pt-6 border-t grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
-                  <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                    Person Responsible
-                  </label>
-                  <div className="sm:col-span-2 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-                    <input
-                      type="text"
-                      name="personResponsible"
-                      value={formData.personResponsible}
-                      onChange={handleInputChange}
-                      className="w-full sm:w-32 custom-input"
-                    />
-                    <span className="bg-gray-200 text-gray-700 px-4 py-2 sm:py-3 rounded-lg border text-sm sm:text-base font-medium">
-                      SYSTEM ADMINISTRATOR
-                    </span>
-                  </div>
-                </div>
+            
               </div>
             </div>
 
@@ -135,19 +84,10 @@ const page = () => {
             <div className="mt-8 pt-6 border-t border-gray-200">
               {/* Action Buttons */}
               <div className="grid grid-cols-5 gap-2 sm:gap-4 w-full">
+                <div></div>
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <CircleFadingPlus className="text-xl" />
                   <span className="block text-xs sm:text-base">Add</span>
-                </button>
-
-                <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
-                  <Edit3 className="text-xl" />
-                  <span className="block text-xs sm:text-base">Edit</span>
-                </button>
-
-                <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-green-600 border border-green-600 hover:bg-green-50 px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 bg-white">
-                  <Search className="text-xl" />
-                  <span className="block text-xs sm:text-base">Find</span>
                 </button>
 
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">

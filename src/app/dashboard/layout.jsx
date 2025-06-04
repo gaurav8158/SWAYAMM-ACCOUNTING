@@ -4,7 +4,7 @@ import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex h-screen w-full  bg-gray-100">
+    <div className="flex font-poppins h-screen w-full  bg-gray-100">
       {/* Sidebar */}
       <aside className=" bg-white flex-shrink-0  shadow-md">
         <Sidebar />

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { Ban, CircleFadingPlus, CircleX, Save, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Cardheader from "@/components/dashboard/Cardheader";
 
 const page = () => {
   const [formData, setFormData] = useState({
@@ -32,12 +33,7 @@ const page = () => {
         <div className="p-6 sm:px-4 md:px-6 py-1">
           <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 md:p-6">
             {/* Company Header */}
-            <div className="text-center py-3 bg-gray-200 rounded-lg mb-6">
-              <h1 className="text-lg font-bold text-gray-800">
-                DSM SUGAR RAJPURA
-              </h1>
-              <h2 className="text-md font-semibold text-gray-700">BUDAUN</h2>
-            </div>
+            <Cardheader title1="DSM SUGAR RAJPURA" title2="BUDAUN" />
 
             {/* Form Fields with Better Desktop Layout */}
             <div className="space-y-6">
@@ -165,37 +161,37 @@ const page = () => {
               <div className="flex justify-between sm:justify-center gap-2 sm:gap-4 w-full">
                 <Button
                   size="lg"
-                  className="flex-1 sm:flex-none w-full sm:w-auto bg-green-600 hover:bg-green-500 text-white"
+                  className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-green-600 hover:bg-green-500 text-white"
                 >
                   <CircleFadingPlus className="text-xl" />
-                  <span className="hidden sm:block">NEW</span>
+                  <span className="block">ADD</span>
                 </Button>
 
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="flex-1 sm:flex-none w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
-                >
-                  <Search className="text-xl" />
-                  <span className="hidden sm:block">FIND</span>
-                </Button>
+                   <Button
+                                size="lg"
+                                variant="outline"
+                                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
+                              >
+                                <Search className="text-xl" />
+                                <span className="block">FIND</span>
+                              </Button>
 
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="flex-1 sm:flex-none w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
+                  className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
                 >
                   <Ban className="text-xl" />
-                  <span className="hidden sm:block">CANCEL</span>
+                  <span className="block">CANCEL</span>
                 </Button>
 
                 <Button
                   size="lg"
                   variant="destructive"
-                  className="flex-1 sm:flex-none w-full sm:w-auto"
+                  className="flex-1 sm:flex-none h-16 sm:h-10 flex-col  sm:flex-row w-full sm:w-auto"
                 >
                   <CircleX className="text-xl" />
-                  <span className="hidden sm:block">CLOSE</span>
+                  <span className="block">CLOSE</span>
                 </Button>
               </div>
             </div>

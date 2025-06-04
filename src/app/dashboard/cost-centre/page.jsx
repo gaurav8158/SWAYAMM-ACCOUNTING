@@ -6,25 +6,22 @@ import {
   CircleX,
   Search,
   Edit3,
-  ChevronsLeft,
-  ChevronsRight,
-  ChevronLeft,
-  ChevronRight,
+
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Cardheader from "@/components/dashboard/Cardheader";
 
 const page = () => {
   const [formData, setFormData] = useState({
-    profitLossCode: "B2",
-    profitLossName: "CONTRACTOR RETENTION MONEY",
-    dateOfOpening: "7/18/2016",
-    acCode: "NE",
+    costCentre: "10",
+    costCentreName: "CANE UNLOADERS",
+    head: "",
+    acCode: "FC002",
     personResponsible: "SA",
   });
 
   const [currentRecord, setCurrentRecord] = useState(1);
-  const totalRecords = 342;
+  const totalRecords = 176;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +51,7 @@ const page = () => {
   return (
     <div className="h-screen overflow-y-auto">
       <div className="transition-all duration-300 ease-in-out bg-gray-100">
-        <Navbar pageTitle="LEDGER MASTER" />
+        <Navbar pageTitle="COST CENTRE MASTER" />
 
         <div className="p-6 sm:px-4 md:px-6 py-1">
           <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 md:p-6">
@@ -63,45 +60,56 @@ const page = () => {
 
             {/* Form Fields with Modern Design */}
             <div className="space-y-6">
-              {/*  Ledger*/}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+              {/* Cost Centre */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                 <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                 Ledger
+                  Cost Centre :
                 </label>
                 <div className="sm:col-span-2 flex gap-3 items-center">
                   <input
                     type="text"
-                    name="profitLossCode"
-                    value={formData.profitLossCode}
+                    name="costCentre"
+                    value={formData.costCentre}
                     onChange={handleInputChange}
-                    className="w-20 custom-input"
+                    className="w-[20%] custom-input"
                   />
                   <input
                     type="text"
-                    name="profitLossName"
-                    value={formData.profitLossName}
+                    name="costCentreName"
+                    value={formData.costCentreName}
                     onChange={handleInputChange}
-                    className="flex-1 custom-input"
+                    className="flex-1 custom-input w-[70%]"
                   />
                 </div>
               </div>
 
-              {/* Date of Opening and A/C Code */}
+              {/* Head and A/C Code */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                    Date of Opening
+                    Head :
                   </label>
                   <input
                     type="text"
-                    name="dateOfOpening"
-                    value={formData.dateOfOpening}
+                    name="head"
+                    value={formData.head}
                     onChange={handleInputChange}
                     className="w-full custom-input"
                   />
                 </div>
 
-           
+                <div className="space-y-2">
+                  <label className="block text-gray-700 font-medium text-sm sm:text-base">
+                    A/C Code
+                  </label>
+                  <input
+                    type="text"
+                    name="acCode"
+                    value={formData.acCode}
+                    onChange={handleInputChange}
+                    className="w-full custom-input"
+                  />
+                </div>
               </div>
 
               {/* Entered By Section */}

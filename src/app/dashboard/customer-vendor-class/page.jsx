@@ -1,30 +1,15 @@
-"use client";
+"use client"
 import React, { useState } from "react";
-import {
-  Ban,
-  CircleFadingPlus,
-  CircleX,
-  Search,
-  Edit3,
-  ChevronsLeft,
-  ChevronsRight,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
-import Navbar from "@/components/Navbar";
+import { Ban, CircleFadingPlus, CircleX, Search } from "lucide-react";
 import Cardheader from "@/components/dashboard/Cardheader";
+import Navbar from "@/components/Navbar";
 
 const page = () => {
   const [formData, setFormData] = useState({
-    profitLossCode: "B2",
-    profitLossName: "CONTRACTOR RETENTION MONEY",
-    dateOfOpening: "7/18/2016",
-    acCode: "NE",
+    partyClassCode: "",
+    partyClassName: "",
     personResponsible: "SA",
   });
-
-  const [currentRecord, setCurrentRecord] = useState(1);
-  const totalRecords = 342;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,27 +19,10 @@ const page = () => {
     }));
   };
 
-  const handleNavigation = (direction) => {
-    switch (direction) {
-      case "first":
-        setCurrentRecord(1);
-        break;
-      case "prev":
-        setCurrentRecord(Math.max(1, currentRecord - 1));
-        break;
-      case "next":
-        setCurrentRecord(Math.min(totalRecords, currentRecord + 1));
-        break;
-      case "last":
-        setCurrentRecord(totalRecords);
-        break;
-    }
-  };
-
   return (
     <div className="h-screen overflow-y-auto">
       <div className="transition-all duration-300 ease-in-out bg-gray-100">
-        <Navbar pageTitle="LEDGER MASTER" />
+        <Navbar pageTitle="Party Class" />
 
         <div className="p-6 sm:px-4 md:px-6 py-1">
           <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 md:p-6">
@@ -63,45 +31,34 @@ const page = () => {
 
             {/* Form Fields with Modern Design */}
             <div className="space-y-6">
-              {/*  Ledger*/}
+              {/* Party Class Code */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
                 <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                 Ledger
+                  Party Class Code
                 </label>
-                <div className="sm:col-span-2 flex gap-3 items-center">
-                  <input
-                    type="text"
-                    name="profitLossCode"
-                    value={formData.profitLossCode}
-                    onChange={handleInputChange}
-                    className="w-20 custom-input"
-                  />
-                  <input
-                    type="text"
-                    name="profitLossName"
-                    value={formData.profitLossName}
-                    onChange={handleInputChange}
-                    className="flex-1 custom-input"
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="partyClassCode"
+                  value={formData.partyClassCode}
+                  onChange={handleInputChange}
+                  className="w-full custom-input"
+                />
               </div>
 
-              {/* Date of Opening and A/C Code */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="block text-gray-700 font-medium text-sm sm:text-base">
-                    Date of Opening
-                  </label>
+              {/* Party Class Name */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                <label className="block text-gray-700 font-medium text-sm sm:text-base">
+                  Party Class Name
+                </label>
+                <div className="sm:col-span-2">
                   <input
                     type="text"
-                    name="dateOfOpening"
-                    value={formData.dateOfOpening}
+                    name="partyClassName"
+                    value={formData.partyClassName}
                     onChange={handleInputChange}
                     className="w-full custom-input"
                   />
                 </div>
-
-           
               </div>
 
               {/* Entered By Section */}
@@ -131,33 +88,28 @@ const page = () => {
               </div>
             </div>
 
-            {/* Record Navigation */}
+            {/* Navigation and Action Buttons */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               {/* Action Buttons */}
-              <div className="grid grid-cols-5 gap-2 sm:gap-4 w-full">
+              <div className="flex justify-between sm:justify-center gap-2 sm:gap-4 w-full">
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <CircleFadingPlus className="text-xl" />
-                  <span className="block text-xs sm:text-base">Add</span>
+                  <span className="block">NEW</span>
                 </button>
 
-                <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
-                  <Edit3 className="text-xl" />
-                  <span className="block text-xs sm:text-base">Edit</span>
-                </button>
-
-                <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-green-600 border border-green-600 hover:bg-green-50 px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 bg-white">
+                <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border border-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 bg-white">
                   <Search className="text-xl" />
-                  <span className="block text-xs sm:text-base">Find</span>
+                  <span className="block">FIND</span>
                 </button>
 
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <Ban className="text-xl" />
-                  <span className="block text-xs sm:text-base">Cancel</span>
+                  <span className="block">CANCEL</span>
                 </button>
 
                 <button className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                   <CircleX className="text-xl" />
-                  <span className="block text-xs sm:text-base">Close</span>
+                  <span className="block">CLOSE</span>
                 </button>
               </div>
             </div>
