@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import { Cpu, Eye, Printer, X } from "lucide-react";
 const page = () => {
   const [selectedReportType, setSelectedReportType] =
-    useState("Voucher Printing");
+    useState("Ledger Printing");
   const [accountCodeBase, setAccountCodeBase] = useState(false);
   const [accountCode, setAccountCode] = useState("");
   const [accountName, setAccountName] = useState("");
@@ -24,11 +24,11 @@ const page = () => {
 
   const reportTypes = [
     "Book Printing",
+    "Debtors/Creditors",
     "Ledger Printing",
     "Trial Printing",
     "Statement of Account",
     "Voucher Printing",
-    "Debtors/Creditors",
   ];
 
   const databaseOptions = [
@@ -209,10 +209,10 @@ const page = () => {
 
             {/* Right Column */}
             <div className="space-y-6">
-              {/*  Voucher Printing */}
+              {/*  Ledger Printing */}
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-lg sm:text-xl font-medium text-gray-800 mb-4 sm:mb-6">
-                  Voucher Printing
+                  Ledger Printing
                 </h2>
                 <div className="h-px bg-gray-200 mb-6"></div>
 
@@ -220,7 +220,7 @@ const page = () => {
                   <div className="grid grid-cols-1  gap-4">
                     <div>
                       <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
-                        Type
+                        Led Code
                       </label>
                       <div className="flex gap-2">
                         <input
@@ -263,6 +263,19 @@ const page = () => {
                         onChange={(e) => setToDate(e.target.value)}
                       />
                     </div>
+                  </div>
+                  <div className="flex items-end">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={accountCodeBase}
+                        onChange={(e) => setAccountCodeBase(e.target.checked)}
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <span className="text-gray-700 font-medium text-sm">
+                        Ignore Zero Opening Balance and Zero Transaction
+                      </span>
+                    </label>
                   </div>
                 </div>
               </div>

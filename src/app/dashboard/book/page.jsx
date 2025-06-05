@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { Cpu, Eye, Printer, X } from "lucide-react";
 const page = () => {
-  const [selectedReportType, setSelectedReportType] = useState(
-    "Statement of Account"
-  );
+  const [selectedReportType, setSelectedReportType] = useState("Book Printing");
   const [accountCodeBase, setAccountCodeBase] = useState(false);
   const [accountCode, setAccountCode] = useState("");
   const [accountName, setAccountName] = useState("");
@@ -75,7 +73,7 @@ const page = () => {
 
   return (
     <div className="h-screen overflow-y-auto ">
-      <div className={`transition-all  duration-300 ease-in-out bg-[#EEEEF1]`}>
+      <div className="transition-all  duration-300 ease-in-out bg-[#EEEEF1]">
         <Navbar pageTitle={pageTitles.reports} />
 
         {/* Main Reports Container */}
@@ -135,7 +133,7 @@ const page = () => {
                     </label>
                     <input
                       type="text"
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                      className="w-full custom-input"
                       value={fileName}
                       onChange={(e) => setFileName(e.target.value)}
                     />
@@ -147,7 +145,7 @@ const page = () => {
                     </label>
                     <input
                       type="number"
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                      className="w-full custom-input"
                       value={numberOfCopies}
                       onChange={(e) => setNumberOfCopies(e.target.value)}
                       min="1"
@@ -161,7 +159,7 @@ const page = () => {
                     onClick={handleProcess}
                     className="flex flex-col items-center justify-center gap-2 p-4 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
-                    <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
+                    <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
                       <Cpu strokeWidth={1.5} className="w-5 h-5 text-white" />
                     </div>
                     <span className="text-sm font-medium text-gray-700">
@@ -210,26 +208,15 @@ const page = () => {
 
             {/* Right Column */}
             <div className="space-y-6">
-              {/* Statement of Account */}
+              {/*  Book Printing */}
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-lg sm:text-xl font-medium text-gray-800 mb-4 sm:mb-6">
-                  Statement of Account
+                  Book Printing
                 </h2>
                 <div className="h-px bg-gray-200 mb-6"></div>
 
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
-                        Code
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
-                        value={accountCode}
-                        onChange={(e) => setAccountCode(e.target.value)}
-                      />
-                    </div>
+                  <div className="grid grid-cols-1  gap-4">
                     <div className="flex items-end">
                       <label className="flex items-center space-x-2 cursor-pointer">
                         <input
@@ -239,32 +226,39 @@ const page = () => {
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
                         <span className="text-gray-700 font-medium text-sm">
-                          AccountCode Base
+                          Period Wise
                         </span>
                       </label>
                     </div>
+                    <div>
+                      <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
+                        Book Code
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          className="w-[20%] custom-input"
+                          value={accountCode}
+                          onChange={(e) => setAccountCode(e.target.value)}
+                        />
+                        <input
+                          type="text"
+                          className="w-[80%] custom-input"
+                          value={accountName}
+                          onChange={(e) => setAccountName(e.target.value)}
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
-                      value={accountName}
-                      onChange={(e) => setAccountName(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                         From
                       </label>
                       <input
                         type="date"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                        className="w-full custom-input"
                         value={fromDate}
                         onChange={(e) => setFromDate(e.target.value)}
                       />
@@ -276,7 +270,7 @@ const page = () => {
                       </label>
                       <input
                         type="date"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                        className="w-full custom-input"
                         value={toDate}
                         onChange={(e) => setToDate(e.target.value)}
                       />
@@ -303,7 +297,7 @@ const page = () => {
                         Select Database / Season
                       </label>
                       <select
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm sm:text-base"
+                        className="w-full custom-input"
                         value={selectedDatabase}
                         onChange={(e) => setSelectedDatabase(e.target.value)}
                       >

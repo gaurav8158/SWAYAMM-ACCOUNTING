@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
-
+import { Ban, CircleFadingPlus, Plus, Save, Search, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 const page = ({
   isCollapsed = false,
   activeItem,
@@ -220,7 +221,7 @@ const page = ({
                 {/* SYSTEM ADMINISTRATOR Input */}
                 <input
                   type="text"
-                  className="flex-grow px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
+                  className="flex-grow w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
                   value={personResponsible}
                   onChange={(e) => setPersonResponsible(e.target.value)}
                 />
@@ -228,85 +229,43 @@ const page = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row justify-end gap-3">
-              <button
+            <div className="flex my-5  justify-between sm:justify-center gap-2 sm:gap-4 w-full">
+              <Button
                 onClick={handleNew}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#292F4E] text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 text-sm"
+                size="lg"
+                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-green-600 hover:bg-green-500 text-white"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                NEW
-              </button>
-              <button
+                <Plus className="text-xl" />
+                <span className="block">New</span>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
                 onClick={handleFind}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#292F4E] text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 text-sm"
+                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                FIND
-              </button>
-              <button
+                <Search className="text-xl" />
+                <span className="block">Find</span>
+              </Button>
+              <Button
                 onClick={handleCancel}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#292F4E] text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 text-sm"
+                size="lg"
+                variant="secondary"
+                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
               >
-                {/* Placeholder for Cancel icon */}
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                CANCEL
-              </button>
-              <button
+                <Ban className="text-xl" />
+                <span className="block">Cancel</span>
+              </Button>
+
+              <Button
                 onClick={handleClose}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#292F4E] text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 text-sm"
+                size="lg"
+                variant="destructive"
+                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col  sm:flex-row w-full sm:w-auto"
               >
-                {/* Placeholder for Stop icon */}
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"
-                  />
-                </svg>
-                CLOSE
-              </button>
+                <X className="text-xl" />
+                <span className="block">Close</span>
+              </Button>
             </div>
           </div>
         </div>

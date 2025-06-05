@@ -8,6 +8,24 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+const Checkbox = ({ id, label, checked, onChange }) => {
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        type="checkbox"
+        id={id}
+        checked={checked}
+        onChange={onChange}
+        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+      />
+      <label htmlFor={id} className="text-sm text-gray-700 font-medium">
+        {label}
+      </label>
+    </div>
+  );
+};
+
 const page = () => {
   // Header fields
   const [tranType, setTranType] = useState("JV");
@@ -146,7 +164,7 @@ const page = () => {
                 <AccordionContent className="flex flex-col gap-4 text-balance">
                   <div className="px-1">
                     {/* Top Controls Row */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 sm:mb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 sm:mb-6">
                       {/* TRAN. TYPE */}
                       <div>
                         <label className="block text-gray-700 font-medium mb-2 text-sm">
@@ -163,19 +181,6 @@ const page = () => {
                             </option>
                           ))}
                         </select>
-                      </div>
-
-                      {/* CASH PAYMENT */}
-                      <div>
-                        <label className="block text-gray-700 font-medium mb-2 text-sm">
-                          CASH PAYMENT
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
-                          value={cashPayment}
-                          onChange={(e) => setCashPayment(e.target.value)}
-                        />
                       </div>
 
                       {/* SR NO */}
@@ -210,15 +215,7 @@ const page = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-gray-700 font-medium mb-2 text-sm">
-                            Narration Code
-                          </label>
-                          <div className="bg-gray-100 text-gray-700 rounded-lg p-3 font-medium">
-                            {narrationCode || "Narration"}
-                          </div>
-                        </div>
-                        <div>
-                          <label className="block text-gray-700 font-medium mb-2 text-sm">
-                            Narration Description
+                            Narration
                           </label>
                           <div className="flex gap-2">
                             <select
@@ -312,103 +309,48 @@ const page = () => {
                       </div>
                     </div>
 
-                    {/* NE Field */}
-                    <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 mb-4 sm:mb-6">
-                      <div>
-                        <label className="block text-gray-700 font-medium mb-2 text-sm">
-                          NE
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
-                          value={neField}
-                          onChange={(e) => setNeField(e.target.value)}
-                        />
-                      </div>
-                    </div>
-
                     {/* Print Options */}
                     <div className="mb-4 sm:mb-6">
                       <label className="block text-gray-700 font-medium mb-3 text-sm">
                         Print Options
                       </label>
                       <div className="flex flex-wrap gap-4">
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            id="printMemo"
-                            checked={printMemo}
-                            onChange={(e) => setPrintMemo(e.target.checked)}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor="printMemo"
-                            className="text-sm text-gray-700 font-medium"
-                          >
-                            PRINT MEMO
-                          </label>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            id="advice"
-                            checked={advice}
-                            onChange={(e) => setAdvice(e.target.checked)}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor="advice"
-                            className="text-sm text-gray-700 font-medium"
-                          >
-                            ADVICE
-                          </label>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            id="challan"
-                            checked={challan}
-                            onChange={(e) => setChallan(e.target.checked)}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor="challan"
-                            className="text-sm text-gray-700 font-medium"
-                          >
-                            CHALLAN
-                          </label>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            id="invoice"
-                            checked={invoice}
-                            onChange={(e) => setInvoice(e.target.checked)}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor="invoice"
-                            className="text-sm text-gray-700 font-medium"
-                          >
-                            INVOICE
-                          </label>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            id="voucher"
-                            checked={voucher}
-                            onChange={(e) => setVoucher(e.target.checked)}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label
-                            htmlFor="voucher"
-                            className="text-sm text-gray-700 font-medium"
-                          >
-                            VOUCHER
-                          </label>
-                        </div>
+                        <Checkbox
+                          id="printMemo"
+                          label="PRINT MEMO"
+                          checked={printMemo}
+                          onChange={(e) => setPrintMemo(e.target.checked)}
+                        />
+                        <Checkbox
+                          id="advice"
+                          label="ADVICE"
+                          checked={advice}
+                          onChange={(e) => setAdvice(e.target.checked)}
+                        />
+                        <Checkbox
+                          id="challan"
+                          label="CHALLAN"
+                          checked={challan}
+                          onChange={(e) => setChallan(e.target.checked)}
+                        />
+                        <Checkbox
+                          id="invoice"
+                          label="INVOICE"
+                          checked={invoice}
+                          onChange={(e) => setInvoice(e.target.checked)}
+                        />
+                        <Checkbox
+                          id="voucher"
+                          label="VOUCHER"
+                          checked={voucher}
+                          onChange={(e) => setVoucher(e.target.checked)}
+                        />
+                        <Checkbox
+                          id="neField"
+                          label="Ne"
+                          checked={neField}
+                          onChange={(e) => setNeField(e.target.checked)}
+                        />
                       </div>
                     </div>
                   </div>
@@ -876,28 +818,36 @@ const page = () => {
               </AccordionItem>
             </Accordion>
           </div>
-          <div className=" flex flex-row mt-3 justify-center sm:justify-end gap-3">
-            <button
+          <div className="flex my-5  justify-between sm:justify-center gap-2 sm:gap-4 w-full">
+            <Button
+              size="lg"
+              variant="outline"
               onClick={handleSave}
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 px-6 py-3 bg-slate-700 text-white rounded-lg font-medium hover:bg-slate-800 transition-all duration-200 transform hover:scale-105"
+              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
             >
-              <Save className="w-5" />
-              SAVE
-            </button>
-            <button
+              <Save className="text-xl" />
+              <span className="block">SAVE</span>
+            </Button>
+
+            <Button
               onClick={handleCancel}
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 px-6 py-3 bg-slate-700 text-white rounded-lg font-medium hover:bg-slate-800 transition-all duration-200 transform hover:scale-105"
+              size="lg"
+              variant="secondary"
+              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
             >
-              <Ban className="w-5" />
-              CANCEL
-            </button>
-            <button
+              <Ban className="text-xl" />
+              <span className="block">CANCEL</span>
+            </Button>
+
+            <Button
               onClick={handleClose}
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 px-6 py-3 bg-slate-700 text-white rounded-lg font-medium hover:bg-slate-800 transition-all duration-200 transform hover:scale-105"
+              size="lg"
+              variant="destructive"
+              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col  sm:flex-row w-full sm:w-auto"
             >
-              <X className="w-5" />
-              CLOSE
-            </button>
+              <X className="text-xl" />
+              <span className="block">CLOSE</span>
+            </Button>
           </div>
         </div>
       </div>

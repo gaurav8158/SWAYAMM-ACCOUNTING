@@ -16,6 +16,7 @@ import {
   X,
   Save,
   Ban,
+  CircleX,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import {
@@ -24,6 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 
 // Responsive Select Field Component
 const SelectField = ({
@@ -39,10 +41,7 @@ const SelectField = ({
       {/* Labels - Stack on mobile, side by side on desktop */}
       <div className="flex flex-col sm:grid sm:grid-cols-2 gap-2 mb-3">
         <label className="text-gray-700 font-medium text-sm lg:text-base">
-          {label} Code
-        </label>
-        <label className="text-gray-700 font-medium text-sm lg:text-base sm:block hidden">
-          {label} Description
+          {label}
         </label>
       </div>
 
@@ -206,6 +205,7 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
           {/* Header Section */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4  mb-6">
             {/* Company Header */}
+
             <div className="text-center ">
               <div className="flex flex-row gap-2 sm:gap-3 justify-center items-center text-lg font-medium text-gray-800">
                 <h2 className="underline">DSM SUGAR RAJPURA</h2>
@@ -238,47 +238,22 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                       value={selectedNarration}
                       onChange={setSelectedNarration}
                     />
-
+                    <SelectField
+                      label="Transaction Type"
+                      code={selectedTranType}
+                      options={tranTypeOptions}
+                      value={selectedTranType}
+                      onChange={setSelectedTranType}
+                    />
+                    <SelectField
+                      label="Voucher Type"
+                      code={selectedVoucherType}
+                      options={voucherOptions}
+                      value={selectedVoucherType}
+                      onChange={setSelectedVoucherType}
+                    />
                     {/* Additional Controls Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-                      <div>
-                        <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
-                          Transaction Type
-                        </label>
-                        <select
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
-                          value={selectedTranType}
-                          onChange={(e) => setSelectedTranType(e.target.value)}
-                        >
-                          <option value="">Select...</option>
-                          {tranTypeOptions.map((option) => (
-                            <option key={option.code} value={option.code}>
-                              {option.code} - {option.description}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
-                          Voucher Type
-                        </label>
-                        <select
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
-                          value={selectedVoucherType}
-                          onChange={(e) =>
-                            setSelectedVoucherType(e.target.value)
-                          }
-                        >
-                          <option value="">Select...</option>
-                          {voucherOptions.map((option) => (
-                            <option key={option.code} value={option.code}>
-                              {option.code} - {option.description}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
                       <div>
                         <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
                           Book
@@ -484,28 +459,36 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-row mt-3 justify-center sm:justify-end gap-3">
-            <button
+          <div className="flex my-5  justify-between sm:justify-center gap-2 sm:gap-4 w-full">
+            <Button
+              size="lg"
+              variant="outline"
               onClick={handleSave}
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 px-6 py-3 bg-slate-700 text-white rounded-lg font-medium hover:bg-slate-800 transition-all duration-200 transform hover:scale-105"
+              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
             >
-              <Save className="w-5" />
-              SAVE
-            </button>
-            <button
+              <Save className="text-xl" />
+              <span className="block">SAVE</span>
+            </Button>
+
+            <Button
               onClick={handleCancel}
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 px-6 py-3 bg-slate-700 text-white rounded-lg font-medium hover:bg-slate-800 transition-all duration-200 transform hover:scale-105"
+              size="lg"
+              variant="secondary"
+              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
             >
-              <Ban className="w-5" />
-              CANCEL
-            </button>
-            <button
+              <Ban className="text-xl" />
+              <span className="block">CANCEL</span>
+            </Button>
+
+            <Button
               onClick={handleClose}
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 px-6 py-3 bg-slate-700 text-white rounded-lg font-medium hover:bg-slate-800 transition-all duration-200 transform hover:scale-105"
+              size="lg"
+              variant="destructive"
+              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col  sm:flex-row w-full sm:w-auto"
             >
-              <X className="w-5" />
-              CLOSE
-            </button>
+              <X className="text-xl" />
+              <span className="block">CLOSE</span>
+            </Button>
           </div>
         </div>
       </div>

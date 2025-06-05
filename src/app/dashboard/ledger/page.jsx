@@ -81,7 +81,7 @@ const page = () => {
                     name="profitLossName"
                     value={formData.profitLossName}
                     onChange={handleInputChange}
-                    className="flex-1 custom-input"
+                    className="flex-1  w-full custom-input"
                   />
                 </div>
               </div>

@@ -82,7 +82,7 @@ const page = () => {
                     name="profitLossName"
                     value={formData.profitLossName}
                     onChange={handleInputChange}
-                    className="flex-1 custom-input"
+                    className="flex-1 w-full custom-input"
                   />
                 </div>
               </div>
@@ -104,12 +104,12 @@ const page = () => {
                     name="profitLossName"
                     value={formData.profitLossName}
                     onChange={handleInputChange}
-                    className="flex-1 custom-input"
+                    className="flex-1 w-full custom-input"
                   />
                 </div>
               </div>
             </div>
-            <p>NOTE: Use salary and wages account only</p>
+            <p className="mt-4">NOTE: Use salary and wages account only</p>
             {/* Record Navigation */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               {/* Action Buttons */}

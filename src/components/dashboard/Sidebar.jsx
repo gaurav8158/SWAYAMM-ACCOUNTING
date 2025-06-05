@@ -11,6 +11,7 @@ import {
   Menu,
   X,
   Text,
+  Crown,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,7 +68,7 @@ const transactionSubMenuItems = [
 ];
 const reportsItems = [
   { id: "teBook", label: "Book", path: "/dashboard/book" },
-  { id: "teLedger", label: "Ledger", path: "/dashboard/ledger" },
+  { id: "teLedger", label: "Ledger", path: "/dashboard/ledger-report" },
   {
     id: "teTrialBalance",
     label: "Trial Balance",
@@ -281,7 +282,7 @@ const Sidebar = () => {
             >
               DASHBOARD
             </h2>
-            <div className="mb-6">
+            <div className={`${isCollapsed ? "mb-0" : "mb-6"}`}>
               {/* Dashboard main item */}
               <Link href="/dashboard">
                 <button
@@ -294,6 +295,7 @@ const Sidebar = () => {
                                     : "hover:bg-white hover:shadow-sm"
                                 }`}
                   // onClick={(e) => handleMenuClick(e, "dashboard")}
+                  onClick={() => setIsMobileOpen(false)}
                 >
                   <span
                     className={`flex items-center justify-center w-10 h-10 rounded-lg
@@ -364,7 +366,7 @@ const Sidebar = () => {
           <div className="pt-2">
             <h2
               className={`text-xs font-semibold text-gray-500 mb-3 ${
-                isCollapsed ? "text-center" : "px-4"
+                isCollapsed ? "text-center " : "px-4"
               }`}
             >
               MASTER
@@ -376,7 +378,7 @@ const Sidebar = () => {
                   isCollapsed ? "justify-center" : "px-4"
                 } py-3 rounded-xl transition-all duration-200
                       ${
-                        expandedSections.transactionEntry
+                        expandedSections.master
                           ? "bg-white shadow-sm"
                           : "hover:bg-white hover:shadow-sm"
                       }`}
@@ -390,7 +392,8 @@ const Sidebar = () => {
                               : "text-blue-700"
                           }`}
                 >
-                  <BarChart3 size={20} />
+                  {" "}
+                  <Crown size={20} />
                 </span>
                 {!isCollapsed && (
                   <span className="ml-3 text-gray-700 font-medium">MASTER</span>
@@ -563,6 +566,7 @@ const Sidebar = () => {
                     <Link
                       key={item.id}
                       href={item.path}
+                      onClick={() => setIsMobileOpen(false)}
                       className={`w-full flex items-center px-4 py-2 rounded-lg transition-all duration-200 
               ${
                 activeSubItem.reports === item.id

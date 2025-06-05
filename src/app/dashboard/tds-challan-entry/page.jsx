@@ -1,6 +1,8 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
+import { Ban, Cpu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 const page = ({
   isCollapsed = false,
   activeItem,
@@ -47,7 +49,7 @@ const page = ({
   };
 
   return (
-       <div className="h-screen overflow-y-auto ">
+    <div className="h-screen overflow-y-auto ">
       <div className="transition-all  duration-300 ease-in-out bg-[#EEEEF1]">
         <Navbar
           pageTitle={pageTitles.tdschallanentry}
@@ -289,7 +291,7 @@ const page = ({
                 {/* SYSTEM ADMINISTRATOR Input */}
                 <input
                   type="text"
-                  className="flex-grow px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
+                  className="flex-grow w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black text-sm"
                   value={personResponsible}
                   onChange={(e) => setPersonResponsible(e.target.value)}
                 />
@@ -297,74 +299,38 @@ const page = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row justify-end gap-3">
-              <button
+            <div className="flex my-5  justify-between sm:justify-center gap-2 sm:gap-4 w-full">
+              <Button
+                size="lg"
+                variant="outline"
                 onClick={handleProcess}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#292F4E] text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 text-sm"
+                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
               >
-                {/* Placeholder for Process icon */}
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                PROCESS
-              </button>
-              <button
+                <Cpu className="text-xl" />
+                <span className="block">Process</span>
+              </Button>
+
+              <Button
                 onClick={handleCancel}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#292F4E] text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 text-sm"
+                size="lg"
+                variant="secondary"
+                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
               >
-                {/* Placeholder for Cancel icon */}
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                CANCEL
-              </button>
-              <button
+                <Ban className="text-xl" />
+                <span className="block">CANCEL</span>
+              </Button>
+
+              <Button
                 onClick={handleClose}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-[#292F4E] text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 text-sm"
+                size="lg"
+                variant="destructive"
+                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col  sm:flex-row w-full sm:w-auto"
               >
-                {/* Placeholder for Stop icon */}
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"
-                  />
-                </svg>
-                CLOSE
-              </button>
+                <X className="text-xl" />
+                <span className="block">CLOSE</span>
+              </Button>
             </div>
+           
           </div>
         </div>
       </div>
