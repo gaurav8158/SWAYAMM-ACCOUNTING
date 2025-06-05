@@ -18,7 +18,7 @@ const page = () => {
     account: "Account Management",
     ledger: "Financial Ledger",
     narration: "Narration",
-    reports: "Reports",
+    reports: "Book Reports",
   };
 
   const reportTypes = [
