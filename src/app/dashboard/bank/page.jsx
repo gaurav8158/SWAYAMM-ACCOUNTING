@@ -26,8 +26,8 @@ const page = () => {
   };
 
   return (
-    <div className="h-screen overflow-y-auto">
-      <div className="transition-all duration-300 ease-in-out bg-[#EEEEF1]">
+    <div className="h-screen overflow-y-auto bg-[#EEEEF1]">
+      <div className="transition-all duration-300 ease-in-out ">
         <Navbar pageTitle="Bank Master" />
 
         <div className="p-6 sm:px-4 md:px-6 py-1">
@@ -167,14 +167,14 @@ const page = () => {
                   <span className="block">ADD</span>
                 </Button>
 
-                   <Button
-                                size="lg"
-                                variant="outline"
-                                className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
-                              >
-                                <Search className="text-xl" />
-                                <span className="block">FIND</span>
-                              </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
+                >
+                  <Search className="text-xl" />
+                  <span className="block">FIND</span>
+                </Button>
 
                 <Button
                   size="lg"

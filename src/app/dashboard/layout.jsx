@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
       </aside>
 
       {/* Main Content */}
-      <main className="overflow-auto flex-1">{children}</main>
+      <main className="overflow-auto custom-scrollbar flex-1">{children}</main>
     </div>
   );
 };

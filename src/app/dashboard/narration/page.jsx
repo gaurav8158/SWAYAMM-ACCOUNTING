@@ -1,22 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import {
-  Bell,
-  Settings,
-  Home,
-  ChevronRight,
-  User,
-  Menu,
-  Clock,
-  MessageCircle,
-  Music,
-  CreditCard,
-  Search,
-  Plus,
-  X,
   Save,
   Ban,
-  CircleX,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import {
@@ -26,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import Cardheader from "@/components/dashboard/Cardheader";
 
 // Responsive Select Field Component
 const SelectField = ({
@@ -193,278 +180,261 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
     console.log("Cancelling...");
   };
 
-  const handleClose = () => {
-    console.log("Closing...");
-  };
 
   return (
-    <div className="h-screen overflow-y-auto ">
-      <div className={`transition-all  duration-300 ease-in-out bg-[#EEEEF1]`}>
-        <Navbar pageTitle={pageTitles.narration} />
-        <div className="p-6 sm:px-4 md:px-6 py-4">
-          {/* Header Section */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4  mb-6">
+    <div className="h-screen overflow-y-auto bg-[#EEEEF1] ">
+      <div className={`transition-all  duration-300 ease-in-out `}>
+        <Navbar pageTitle={pageTitles.narration} menu="Transaction Entry" />
+        {/* Main Content Container */}
+        <div className="p-6 sm:px-4 md:px-6 py-1">
+          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 md:p-6">
             {/* Company Header */}
+            <Cardheader
+              title1="DSM SUGAR RAJPURA"
+              title2="BUDAUN"
+              head="NARRATION"
+            />
 
-            <div className="text-center ">
-              <div className="flex flex-row gap-2 sm:gap-3 justify-center items-center text-lg font-medium text-gray-800">
-                <h2 className="underline">DSM SUGAR RAJPURA</h2>
-                <h3 className="underline">BUDAUN</h3>
-              </div>
-              <h1 className="text-xl lg:text-2xl font-bold text-gray-800">
-                NARRATION
-              </h1>
-            </div>
-          </div>
+            <div>
+              <Accordion
+                type="multiple"
+                // collapsible
+                className="w-full"
+              >
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>General</AccordionTrigger>
+                  <AccordionContent className="flex flex-col gap-4 text-balance">
+                    <div className="px-1">
+                      <div className="h-px bg-gray-200 mb-6"></div>
 
-          <div className="bg-white p-4 rounded-3xl">
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full"
-              defaultValue="item-1"
-            >
-              <AccordionItem value="item-1">
-                <AccordionTrigger>General</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                  <div className="px-1">
-                    <div className="h-px bg-gray-200 mb-6"></div>
-
-                    {/* Narration Control */}
-                    <SelectField
-                      label="Narration"
-                      code={selectedNarration}
-                      options={narrationOptions}
-                      value={selectedNarration}
-                      onChange={setSelectedNarration}
-                    />
-                    <SelectField
-                      label="Transaction Type"
-                      code={selectedTranType}
-                      options={tranTypeOptions}
-                      value={selectedTranType}
-                      onChange={setSelectedTranType}
-                    />
-                    <SelectField
-                      label="Voucher Type"
-                      code={selectedVoucherType}
-                      options={voucherOptions}
-                      value={selectedVoucherType}
-                      onChange={setSelectedVoucherType}
-                    />
-                    {/* Additional Controls Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-                      <div>
-                        <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
-                          Book
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
-                          value={bookValue}
-                          onChange={(e) => setBookValue(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="md:col-span-2 xl:col-span-1">
-                        <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
-                          Date of Opening
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
-                          value={dateOfOpening}
-                          onChange={(e) => setDateOfOpening(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>Debit Entries</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                  {/* Debit Entries Section */}
-                  <div className="px-1">
-                    <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-6">
-                      Debit Entries
-                    </h2>
-                    <div className="h-px bg-gray-200 mb-8"></div>
-
-                    <SelectField
-                      label="DB A/C"
-                      code={selectedDebitDbAc}
-                      options={dbAcOptions}
-                      value={selectedDebitDbAc}
-                      onChange={setSelectedDebitDbAc}
-                      placeholder="Select DB A/C..."
-                    />
-
-                    <SelectField
-                      label="Ledger"
-                      code={selectedDebitLedger}
-                      options={ledgerOptions}
-                      value={selectedDebitLedger}
-                      onChange={setSelectedDebitLedger}
-                      placeholder="Select Ledger..."
-                    />
-
-                    <SelectField
-                      label="P & L"
-                      code={selectedDebitPL}
-                      options={plOptions}
-                      value={selectedDebitPL}
-                      onChange={setSelectedDebitPL}
-                      placeholder="Select P&L Account..."
-                    />
-
-                    <SelectField
-                      label="B.SH."
-                      code={selectedDebitBSH}
-                      options={bshOptions}
-                      value={selectedDebitBSH}
-                      onChange={setSelectedDebitBSH}
-                      placeholder="Select Balance Sheet Account..."
-                    />
-
-                    <SelectField
-                      label="C & F"
-                      code={selectedDebitCF}
-                      options={cfOptions}
-                      value={selectedDebitCF}
-                      onChange={setSelectedDebitCF}
-                      placeholder="Select C & F..."
-                    />
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>Credit Entries</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                  {/* Credit Entries Section */}
-                  <div className="px-1">
-                    <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-6">
-                      Credit Entries
-                    </h2>
-                    <div className="h-px bg-gray-200 mb-8"></div>
-
-                    <SelectField
-                      label="CR A/C"
-                      code={selectedCreditCrAc}
-                      options={crAcOptions}
-                      value={selectedCreditCrAc}
-                      onChange={setSelectedCreditCrAc}
-                      placeholder="Select CR A/C..."
-                    />
-
-                    <SelectField
-                      label="Ledger"
-                      code={selectedCreditLedger}
-                      options={ledgerOptions}
-                      value={selectedCreditLedger}
-                      onChange={setSelectedCreditLedger}
-                      placeholder="Select Ledger..."
-                    />
-
-                    <SelectField
-                      label="P & L"
-                      code={selectedCreditPL}
-                      options={plOptions}
-                      value={selectedCreditPL}
-                      onChange={setSelectedCreditPL}
-                      placeholder="Select P&L Account..."
-                    />
-
-                    <SelectField
-                      label="B.SH."
-                      code={selectedCreditBSH}
-                      options={bshOptions}
-                      value={selectedCreditBSH}
-                      onChange={setSelectedCreditBSH}
-                      placeholder="Select Balance Sheet Account..."
-                    />
-
-                    <SelectField
-                      label="C & F"
-                      code={selectedCreditCF}
-                      options={cfOptions}
-                      value={selectedCreditCF}
-                      onChange={setSelectedCreditCF}
-                      placeholder="Select C & F..."
-                    />
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-4">
-                <AccordionTrigger> Narration Details</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                  {/* Narration Details Section */}
-                  <div className="px-1">
-                    <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-6">
-                      Narration Details
-                    </h2>
-                    <div className="h-px bg-gray-200 mb-8"></div>
-
-                    <SelectField
-                      label="Payment Option"
-                      code={selectedPaymentOption}
-                      options={paymentOptions}
-                      value={selectedPaymentOption}
-                      onChange={setSelectedPaymentOption}
-                    />
-
-                    {/* Narration Detail Fields */}
-                    <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-8">
-                      {narrationDetails.map((detail, i) => (
-                        <div key={i}>
+                      {/* Narration Control */}
+                      <SelectField
+                        label="Narration"
+                        code={selectedNarration}
+                        options={narrationOptions}
+                        value={selectedNarration}
+                        onChange={setSelectedNarration}
+                      />
+                      <SelectField
+                        label="Transaction Type"
+                        code={selectedTranType}
+                        options={tranTypeOptions}
+                        value={selectedTranType}
+                        onChange={setSelectedTranType}
+                      />
+                      <SelectField
+                        label="Voucher Type"
+                        code={selectedVoucherType}
+                        options={voucherOptions}
+                        value={selectedVoucherType}
+                        onChange={setSelectedVoucherType}
+                      />
+                      {/* Additional Controls Grid */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+                        <div>
                           <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
-                            Detail {i + 1}
+                            Book
                           </label>
                           <input
                             type="text"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-black transition-all duration-200"
-                            value={detail}
-                            onChange={(e) =>
-                              handleNarrationDetailChange(i, e.target.value)
-                            }
-                            placeholder="NA"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
+                            value={bookValue}
+                            onChange={(e) => setBookValue(e.target.value)}
                           />
                         </div>
-                      ))}
-                    </div>
 
-                    {/* Responsible Person */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-12">
-                      <div>
-                        <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
-                          Responsible Person
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
-                          value={responsiblePerson}
-                          onChange={(e) => setResponsiblePerson(e.target.value)}
-                        />
-                      </div>
-                      <div className="flex items-end">
-                        <span className="text-gray-700 font-medium text-sm lg:text-base">
-                          SYSTEM ADMINISTRATOR
-                        </span>
+                        <div className="md:col-span-2 xl:col-span-1">
+                          <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
+                            Date of Opening
+                          </label>
+                          <input
+                            type="text"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
+                            value={dateOfOpening}
+                            onChange={(e) => setDateOfOpening(e.target.value)}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>Debit Entries</AccordionTrigger>
+                  <AccordionContent className="flex flex-col gap-4 text-balance">
+                    {/* Debit Entries Section */}
+                    <div className="px-1">
+                      <div className="h-px bg-gray-200 mb-8"></div>
+
+                      <SelectField
+                        label="DB A/C"
+                        code={selectedDebitDbAc}
+                        options={dbAcOptions}
+                        value={selectedDebitDbAc}
+                        onChange={setSelectedDebitDbAc}
+                        placeholder="Select DB A/C..."
+                      />
+
+                      <SelectField
+                        label="Ledger"
+                        code={selectedDebitLedger}
+                        options={ledgerOptions}
+                        value={selectedDebitLedger}
+                        onChange={setSelectedDebitLedger}
+                        placeholder="Select Ledger..."
+                      />
+
+                      <SelectField
+                        label="P & L"
+                        code={selectedDebitPL}
+                        options={plOptions}
+                        value={selectedDebitPL}
+                        onChange={setSelectedDebitPL}
+                        placeholder="Select P&L Account..."
+                      />
+
+                      <SelectField
+                        label="B.SH."
+                        code={selectedDebitBSH}
+                        options={bshOptions}
+                        value={selectedDebitBSH}
+                        onChange={setSelectedDebitBSH}
+                        placeholder="Select Balance Sheet Account..."
+                      />
+
+                      <SelectField
+                        label="C & F"
+                        code={selectedDebitCF}
+                        options={cfOptions}
+                        value={selectedDebitCF}
+                        onChange={setSelectedDebitCF}
+                        placeholder="Select C & F..."
+                      />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>Credit Entries</AccordionTrigger>
+                  <AccordionContent className="flex flex-col gap-4 text-balance">
+                    {/* Credit Entries Section */}
+                    <div className="px-1">
+                      <div className="h-px bg-gray-200 mb-8"></div>
+
+                      <SelectField
+                        label="CR A/C"
+                        code={selectedCreditCrAc}
+                        options={crAcOptions}
+                        value={selectedCreditCrAc}
+                        onChange={setSelectedCreditCrAc}
+                        placeholder="Select CR A/C..."
+                      />
+
+                      <SelectField
+                        label="Ledger"
+                        code={selectedCreditLedger}
+                        options={ledgerOptions}
+                        value={selectedCreditLedger}
+                        onChange={setSelectedCreditLedger}
+                        placeholder="Select Ledger..."
+                      />
+
+                      <SelectField
+                        label="P & L"
+                        code={selectedCreditPL}
+                        options={plOptions}
+                        value={selectedCreditPL}
+                        onChange={setSelectedCreditPL}
+                        placeholder="Select P&L Account..."
+                      />
+
+                      <SelectField
+                        label="B.SH."
+                        code={selectedCreditBSH}
+                        options={bshOptions}
+                        value={selectedCreditBSH}
+                        onChange={setSelectedCreditBSH}
+                        placeholder="Select Balance Sheet Account..."
+                      />
+
+                      <SelectField
+                        label="C & F"
+                        code={selectedCreditCF}
+                        options={cfOptions}
+                        value={selectedCreditCF}
+                        onChange={setSelectedCreditCF}
+                        placeholder="Select C & F..."
+                      />
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger> Narration Details</AccordionTrigger>
+                  <AccordionContent className="flex flex-col gap-4 text-balance">
+                    {/* Narration Details Section */}
+                    <div className="px-1">
+                      <div className="h-px bg-gray-200 mb-8"></div>
+
+                      <SelectField
+                        label="Payment Option"
+                        code={selectedPaymentOption}
+                        options={paymentOptions}
+                        value={selectedPaymentOption}
+                        onChange={setSelectedPaymentOption}
+                      />
+
+                      {/* Narration Detail Fields */}
+                      <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-8">
+                        {narrationDetails.map((detail, i) => (
+                          <div key={i}>
+                            <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
+                              Detail {i + 1}
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 text-black transition-all duration-200"
+                              value={detail}
+                              onChange={(e) =>
+                                handleNarrationDetailChange(i, e.target.value)
+                              }
+                              placeholder="NA"
+                            />
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Responsible Person */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 mb-12">
+                        <div>
+                          <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
+                            Responsible Person
+                          </label>
+                          <input
+                            type="text"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
+                            value={responsiblePerson}
+                            onChange={(e) =>
+                              setResponsiblePerson(e.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="flex items-end">
+                          <span className="text-gray-700 font-medium text-sm lg:text-base">
+                            SYSTEM ADMINISTRATOR
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
           </div>
-
           {/* Action Buttons */}
-          <div className="flex my-5  justify-between sm:justify-center gap-2 sm:gap-4 w-full">
+          <div className="flex my-5  justify-center gap-2 sm:gap-4 w-full">
             <Button
-              size="lg"
-              variant="outline"
               onClick={handleSave}
-              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto text-blue-600 border-blue-600 hover:bg-blue-50"
+              size="lg"
+              variant="secondary"
+              className="flex-none sm:h-10 flex-row w-auto bg-green-500 hover:bg-green-600 text-white"
             >
               <Save className="text-xl" />
               <span className="block">SAVE</span>
@@ -473,21 +443,11 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
             <Button
               onClick={handleCancel}
               size="lg"
-              variant="secondary"
-              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col sm:flex-row w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white"
+              variant="destructive"
+              className="flex-none sm:h-10 flex-row w-auto"
             >
               <Ban className="text-xl" />
               <span className="block">CANCEL</span>
-            </Button>
-
-            <Button
-              onClick={handleClose}
-              size="lg"
-              variant="destructive"
-              className="flex-1 sm:flex-none h-16 sm:h-10 flex-col  sm:flex-row w-full sm:w-auto"
-            >
-              <X className="text-xl" />
-              <span className="block">CLOSE</span>
             </Button>
           </div>
         </div>

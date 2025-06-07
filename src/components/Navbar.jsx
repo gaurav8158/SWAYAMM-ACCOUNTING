@@ -1,3 +1,207 @@
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Settings,
+  Home,
+  ChevronRight,
+  User,
+  Search,
+  Plus,
+  X,
+} from "lucide-react";
+import Link from "next/link";
+
+const Navbar = ({ pageTitle = "Dashboard", menu }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const notificationRef = useRef(null);
+
+  // Close notifications when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
+        setIsNotificationsOpen(false);
+      }
+    };
+
+    if (isNotificationsOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isNotificationsOpen]);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    console.log("Search query:", searchQuery);
+  };
+
+  const handleAddClick = () => {
+    console.log("Add button clicked for", pageTitle);
+  };
+
+  const isNotDashboard = pageTitle !== "Dashboard";
+
+  return (
+    <div className=" bg-[#EEEEF1] font-poppins p-6 sm:p-4 md:p-6 min-w-0">
+      {/* Main Navbar Container */}
+      <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-lg border border-gray-100 p-4 lg:p-6 min-w-0">
+        {/* Main Navigation Row */}
+        <div className="flex items-center justify-between gap-4 min-w-0">
+          {/* Left Section: Menu Button + Title */}
+          <div className="flex items-center min-w-0 flex-1">
+            {/* Mobile Menu Button - Only visible on mobile */}
+
+            {/* Title Section */}
+            <div className="min-w-0 flex-1">
+              {/* Breadcrumb - Hidden on mobile, visible on desktop */}
+              <div className="hidden md:flex items-center text-xs text-gray-500 mb-1.5">
+                <Link href="/dashboard">
+                  <div className="hover:text-blue-600 flex items-center cursor-pointer transition-colors duration-200">
+                    <Home size={12} className="mr-1.5" />
+                    <span>Home</span>
+                  </div>{" "}
+                </Link>
+                <ChevronRight size={10} className="mx-2 text-gray-400" />
+                <div className="font-poppins hover:text-blue-600 truncate cursor-pointer transition-colors duration-200">
+                  {menu || pageTitle}
+                </div>
+              </div>
+
+              {/* Page Title */}
+              <h1 className="font-poppins text-lg md:text-lg lg:text-xl text-gray-900 font-bold truncate ml-10 sm:ml-0">
+                {pageTitle}
+              </h1>
+            </div>
+          </div>
+
+          {/* Center Section: Search - Hidden on mobile, visible on desktop when not Dashboard */}
+          <div
+            className={`${
+              isNotDashboard ? "hidden lg:flex" : "hidden"
+            } items-center flex-shrink-0 mx-6`}
+          >
+            <div className="relative">
+              <Search
+                size={18}
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              />
+              <input
+                type="text"
+                placeholder={`Search ${pageTitle.toLowerCase()}...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleSearchSubmit(e)}
+                className="pl-10 pr-4 py-2.5 w-80 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm text-gray-900 placeholder-gray-500"
+              />
+            </div>
+          </div>
+
+          {/* Right Section: Action Buttons */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Add Button - Responsive sizing and visibility */}
+            <button
+              onClick={handleAddClick}
+              className={`${
+                isNotDashboard ? "flex" : "hidden"
+              } items-center justify-center p-2 lg:p-2.5 text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 group`}
+            >
+              <Plus
+                size={16}
+                className="lg:w-5 lg:h-5 transition-transform duration-200 group-hover:rotate-90"
+              />
+            </button>
+
+            {/* Sign In Button - Responsive text */}
+            <button className="flex items-center text-gray-700  bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-500 hover:to-indigo-600 rounded-lg md:rounded-xl shadow-sm hover:shadow-lg hover:text-white transition-all duration-300 transform hover:scale-105  border-blue-100 hover:border-transparent px-3 lg:px-4 py-2 lg:py-2.5  border   ">
+              <User size={16} className="lg:w-4 lg:h-4 mr-0 sm:mr-2" />
+              <span className="font-semibold text-sm hidden sm:inline">
+                SIGN IN
+              </span>
+            </button>
+
+            <button className="flex items-center justify-center p-2 lg:p-2.5 text-gray-600 hover:text-green-600 bg-green-100 hover:bg-green-200 rounded-lg transition-all duration-200 group">
+              <Settings
+                size={16}
+                className="lg:w-5 lg:h-5 transition-transform duration-200 group-hover:rotate-90"
+              />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Search Section - Only visible on mobile when not Dashboard */}
+        <div
+          className={`${
+            isNotDashboard ? "block lg:hidden" : "hidden"
+          } mt-4 pt-4 border-t border-gray-100`}
+        >
+          <div className="relative">
+            <Search
+              size={16}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            />
+            <input
+              type="text"
+              placeholder={`Search ${pageTitle.toLowerCase()}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSearchSubmit(e)}
+              className="pl-10 pr-4 py-2.5 w-full bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm text-gray-900 placeholder-gray-500"
+            />
+          </div>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div
+            className="md:hidden fixed inset-0 z-50 bg-black/50"
+            onClick={toggleMobileMenu}
+          >
+            <div
+              className="absolute top-4 left-4 right-4 bg-white rounded-xl shadow-2xl p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-bold text-gray-900">Menu</h2>
+                <button
+                  onClick={toggleMobileMenu}
+                  className="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="space-y-3">
+                <button className="w-full flex items-center p-3 text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                  <Home size={18} className="mr-3" />
+                  Dashboard
+                </button>
+                <button className="w-full flex items-center p-3 text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                  <User size={18} className="mr-3" />
+                  Profile
+                </button>
+                <button className="w-full flex items-center p-3 text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                  <Settings size={18} className="mr-3" />
+                  Settings
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;
+
 // "use client";
 // import React, { useState, useRef, useEffect } from "react";
 // import {
@@ -267,265 +471,3 @@
 // };
 
 // export default Navbar;
-
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import {
-  Bell,
-  Settings,
-  Home,
-  ChevronRight,
-  User,
-  Menu,
-  Clock,
-  MessageCircle,
-  Music,
-  CreditCard,
-  Search,
-  Plus,
-  X,
-} from "lucide-react";
-
-const Navbar = ({ pageTitle = "Dashboard" }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const notificationRef = useRef(null);
-
-  // Sample notifications data
-  const notifications = [
-    {
-      id: 1,
-      type: "message",
-      icon: MessageCircle,
-      iconBg: "bg-orange-500",
-      title: "New Message",
-      subtitle: "From Laur",
-      time: "13 minutes ago",
-      avatar: "👨🏾",
-      unread: true,
-    },
-    {
-      id: 2,
-      type: "music",
-      icon: Music,
-      iconBg: "bg-green-500",
-      title: "New Album",
-      subtitle: "By Travis Scott",
-      time: "1 day",
-      unread: true,
-    },
-    {
-      id: 3,
-      type: "payment",
-      icon: CreditCard,
-      iconBg: "bg-blue-500",
-      title: "Payment Successfully Completed",
-      subtitle: "",
-      time: "2 days",
-      unread: false,
-    },
-  ];
-
-  const unreadCount = notifications.filter((n) => n.unread).length;
-
-  // Close notifications when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        notificationRef.current &&
-        !notificationRef.current.contains(event.target)
-      ) {
-        setIsNotificationsOpen(false);
-      }
-    };
-
-    if (isNotificationsOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }, [isNotificationsOpen]);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const toggleNotifications = () => {
-    setIsNotificationsOpen(!isNotificationsOpen);
-  };
-
-  const handleNotificationClick = (notificationId) => {
-    console.log(`Clicked notification ${notificationId}`);
-  };
-
-  const markAllAsRead = () => {
-    console.log("Mark all as read");
-    setIsNotificationsOpen(false);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search query:", searchQuery);
-  };
-
-  const handleAddClick = () => {
-    console.log("Add button clicked for", pageTitle);
-  };
-
-  const isNotDashboard = pageTitle !== "Dashboard";
-
-  return (
-    <div className=" bg-[#EEEEF1] font-poppins p-6 sm:p-4 md:p-6 min-w-0">
-      {/* Main Navbar Container */}
-      <div className="w-full max-w-7xl mx-auto bg-white rounded-xl shadow-lg border border-gray-100 p-4 lg:p-6 min-w-0">
-        {/* Main Navigation Row */}
-        <div className="flex items-center justify-between gap-4 min-w-0">
-          {/* Left Section: Menu Button + Title */}
-          <div className="flex items-center min-w-0 flex-1">
-            {/* Mobile Menu Button - Only visible on mobile */}
-
-            {/* Title Section */}
-            <div className="min-w-0 flex-1">
-              {/* Breadcrumb - Hidden on mobile, visible on desktop */}
-              <div className="hidden md:flex items-center text-xs text-gray-500 mb-1.5">
-                <div className="hover:text-blue-600 flex items-center cursor-pointer transition-colors duration-200">
-                  <Home size={12} className="mr-1.5" />
-                  <span>Home</span>
-                </div>
-                <ChevronRight size={10} className="mx-2 text-gray-400" />
-                <div className="font-poppins hover:text-blue-600 truncate cursor-pointer transition-colors duration-200">
-                  {pageTitle}
-                </div>
-              </div>
-
-              {/* Page Title */}
-              <h1 className="font-poppins text-lg md:text-xl lg:text-2xl text-gray-900 font-bold truncate ml-10 sm:ml-0">
-                {pageTitle}
-              </h1>
-            </div>
-          </div>
-
-          {/* Center Section: Search - Hidden on mobile, visible on desktop when not Dashboard */}
-          <div
-            className={`${
-              isNotDashboard ? "hidden lg:flex" : "hidden"
-            } items-center flex-shrink-0 mx-6`}
-          >
-            <div className="relative">
-              <Search
-                size={18}
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              />
-              <input
-                type="text"
-                placeholder={`Search ${pageTitle.toLowerCase()}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleSearchSubmit(e)}
-                className="pl-10 pr-4 py-2.5 w-80 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm text-gray-900 placeholder-gray-500"
-              />
-            </div>
-          </div>
-
-          {/* Right Section: Action Buttons */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Add Button - Responsive sizing and visibility */}
-            <button
-              onClick={handleAddClick}
-              className={`${
-                isNotDashboard ? "flex" : "hidden"
-              } items-center justify-center p-2 lg:p-2.5 text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 group`}
-            >
-              <Plus
-                size={16}
-                className="lg:w-5 lg:h-5 transition-transform duration-200 group-hover:rotate-90"
-              />
-            </button>
-
-            {/* Sign In Button - Responsive text */}
-            <button className="flex items-center text-gray-700  bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-500 hover:to-indigo-600 rounded-lg md:rounded-xl shadow-sm hover:shadow-lg hover:text-white transition-all duration-300 transform hover:scale-105  border-blue-100 hover:border-transparent px-3 lg:px-4 py-2 lg:py-2.5  border   ">
-              <User size={16} className="lg:w-4 lg:h-4 mr-0 sm:mr-2" />
-              <span className="font-semibold text-sm hidden sm:inline">
-                SIGN IN
-              </span>
-            </button>
-
-            <button className="flex items-center justify-center p-2 lg:p-2.5 text-gray-600 hover:text-green-600 bg-green-100 hover:bg-green-200 rounded-lg transition-all duration-200 group">
-              <Settings
-                size={16}
-                className="lg:w-5 lg:h-5 transition-transform duration-200 group-hover:rotate-90"
-              />
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Search Section - Only visible on mobile when not Dashboard */}
-        <div
-          className={`${
-            isNotDashboard ? "block lg:hidden" : "hidden"
-          } mt-4 pt-4 border-t border-gray-100`}
-        >
-          <div className="relative">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-            />
-            <input
-              type="text"
-              placeholder={`Search ${pageTitle.toLowerCase()}...`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSearchSubmit(e)}
-              className="pl-10 pr-4 py-2.5 w-full bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm text-gray-900 placeholder-gray-500"
-            />
-          </div>
-        </div>
-
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <div
-            className="md:hidden fixed inset-0 z-50 bg-black/50"
-            onClick={toggleMobileMenu}
-          >
-            <div
-              className="absolute top-4 left-4 right-4 bg-white rounded-xl shadow-2xl p-6"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-bold text-gray-900">Menu</h2>
-                <button
-                  onClick={toggleMobileMenu}
-                  className="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-200"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-              <div className="space-y-3">
-                <button className="w-full flex items-center p-3 text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
-                  <Home size={18} className="mr-3" />
-                  Dashboard
-                </button>
-                <button className="w-full flex items-center p-3 text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
-                  <User size={18} className="mr-3" />
-                  Profile
-                </button>
-                <button className="w-full flex items-center p-3 text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
-                  <Settings size={18} className="mr-3" />
-                  Settings
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default Navbar;

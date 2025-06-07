@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  ArrowRight,
-  Star,
   Home,
   FileText,
   BarChart3,
@@ -99,7 +97,7 @@ const reportsItems = [
     label: "Profit & Loss Report",
     path: "/dashboard/profit-loss-report",
   },
-  { id: "teCashFlow", label: "Cash Flow", path: "/dashboard/cash-flow" },
+  { id: "teCashFlow", label: "Cash Flow", path: "/dashboard/cash-flow-report" },
   { id: "teMISReport", label: "MIS Report", path: "/dashboard/mis-report" },
 ];
 const dashboardItems = [
@@ -197,26 +195,6 @@ const Sidebar = () => {
     // if (typeof window !== "undefined" && window.innerWidth < 768) {
     //   setIsMobileOpen(false);
     // }
-  };
-
-  // Handle submenu item clicks
-  const handleSubMenuClick = (e, section, subItemName) => {
-    e.preventDefault();
-    console.log("Submenu clicked:", section, subItemName);
-    setActiveSubItem({ ...activeSubItem, [section]: subItemName });
-    setActiveItem(subItemName);
-
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      setIsMobileOpen(false);
-    }
-  };
-
-  // Toggle section expansion
-  const toggleSection = (section) => {
-    setExpandedSections({
-      ...expandedSections,
-      [section]: !expandedSections[section],
-    });
   };
 
   return (
@@ -588,10 +566,10 @@ const Sidebar = () => {
         {/* Collapse toggle button - desktop only */}
         {isMobileOpen && (
           <button
-            className="absolute top-7 -right-3 bg-white border border-gray-200 rounded-full p-2 shadow-md "
+            className="absolute top-7 -right-4 bg-white border border-gray-200 rounded-full p-3 shadow-md "
             onClick={toggleMobileSidebar}
           >
-            <X size={16} className="text-gray-500" />
+            <X size={24} className="text-gray-500" />
           </button>
         )}
         <button
