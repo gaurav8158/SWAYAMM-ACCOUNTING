@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -18,6 +19,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Cardheader from "@/components/dashboard/Cardheader";
+import { PromptModal } from "./PromptModal";
+import DatePicker from "react-datepicker";
 const Checkbox = ({ id, label, checked, onChange }) => {
   return (
     <div className="flex items-center gap-2">
@@ -55,23 +58,23 @@ const RadioButton = ({ id, name, label, value, checked, onChange }) => {
 
 const page = () => {
   // Header fields
-  const [tranType, setTranType] = useState("JV");
+  const [tranType, setTranType] = useState("Cash Payment");
   const [trandesc, setTrandesc] = useState("");
   const [srNo, setSrNo] = useState("9384");
   const [voucherNo, setVoucherNo] = useState("1585");
   const [narrationCode, setNarrationCode] = useState("");
   const [vtDt, setVtDt] = useState("17-Mar-25");
-  const [voucherType, setVoucherType] = useState("C");
-  const [cashVoucher, setCashVoucher] = useState("CASH VOUCHER");
+  const [voucherType, setVoucherType] = useState("Cash Voucher");
+
   const [noField, setNoField] = useState("");
-  const [dateField, setDateField] = useState("");
+  const [dateField, setDateField] = useState(new Date());
 
   // Print options
   const [printMemo, setPrintMemo] = useState(true);
   const [vide, setVide] = useState(false);
 
   // Debit entries
-  const [debitUniversalCode, setDebitUniversalCode] = useState("");
+  const [debitUniversalCode, setDebitUniversalCode] = useState("BA001");
 
   const [debitTotal, setDebitTotal] = useState("");
   const [debitLedger, setDebitLedger] = useState("");
@@ -80,7 +83,7 @@ const page = () => {
   const [debitCashFlow, setDebitCashFlow] = useState("");
 
   // Credit entries
-  const [creditUniversalCode, setCreditUniversalCode] = useState("");
+  const [creditUniversalCode, setCreditUniversalCode] = useState("ZC006");
 
   const [creditLedger, setCreditLedger] = useState("");
   const [creditProfitLoss, setCreditProfitLoss] = useState("");
@@ -94,18 +97,23 @@ const page = () => {
   const [enclosurescode, setEnclosurescode] = useState("");
 
   // Dropdown options
-  const tranTypeOptions = [
+  const voucherTypeOptions = [
     { code: "JV", description: "Journal Voucher" },
     { code: "PV", description: "Payment Voucher" },
     { code: "RV", description: "Receipt Voucher" },
-    { code: "CV", description: "Contra Voucher" },
+    { code: "CV", description: "Cash Voucher" },
   ];
-
+  const tranTypeOptions = [
+    { code: "10", description: "Cash Payment" },
+    { code: "11", description: "Bank Transfer" },
+    { code: "12", description: "Expense Payment" },
+    { code: "13", description: "Revenue Receipt" },
+  ];
   const narrationOptions = [
-    { code: "N1", description: "Cash Payment" },
-    { code: "N2", description: "Bank Transfer" },
-    { code: "N3", description: "Expense Payment" },
-    { code: "N4", description: "Revenue Receipt" },
+    { code: "CON1001", description: "Cash Payment" },
+    { code: "CON1002", description: "Bank Transfer" },
+    { code: "CON1003", description: "Expense Payment" },
+    { code: "CON1004", description: "Revenue Receipt" },
   ];
 
   const handlePrompt = () => {
@@ -249,7 +257,7 @@ const page = () => {
               title2="BUDAUN"
               head="CASH VOUCHER ENTRY"
             />
-            <div >
+            <div>
               <Accordion
                 type="multiple"
                 // collapsible
@@ -275,15 +283,17 @@ const page = () => {
                               onChange={(e) => setTranType(e.target.value)}
                             >
                               {tranTypeOptions.map((option) => (
-                                <option key={option.code} value={option.code}>
+                                <option
+                                  key={option.code}
+                                  value={option.description}
+                                >
                                   {option.code}
                                 </option>
                               ))}
                             </select>
                             <input
                               disabled
-                              value={trandesc}
-                              onChange={(e) => setTrandesc(e.target.value)}
+                              value={tranType}
                               type="text"
                               className="w-[80%] custom-input "
                             />
@@ -320,15 +330,14 @@ const page = () => {
                       {/* Second Row Controls */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 mb-4 sm:mb-6 ">
                         {/* VOUCHER DATE */}
-                        <div className="mb-2 sm:mb-0">
+                        <div className="mb-2 flex flex-col sm:mb-0">
                           <label className="block text-gray-700 font-medium mb-2 text-sm">
                             VOUCHER DATE
                           </label>
-                          <input
-                            type="date"
+                          <DatePicker
                             className="w-full custom-input"
-                            value={vtDt}
-                            onChange={(e) => setVtDt(e.target.value)}
+                            selected={vtDt}
+                            onChange={(date) => setVtDt(date)}
                           />
                         </div>
 
@@ -338,17 +347,25 @@ const page = () => {
                             VOUCHER TYPE
                           </label>
                           <div className="flex gap-2">
-                            <input
-                              type="text"
+                            <select
                               className="w-[20%] custom-input"
                               value={voucherType}
                               onChange={(e) => setVoucherType(e.target.value)}
-                            />
+                            >
+                              {voucherTypeOptions.map((option) => (
+                                <option
+                                  key={option.code}
+                                  value={option.description}
+                                >
+                                  {option.code}
+                                </option>
+                              ))}
+                            </select>
                             <input
                               type="text"
                               className="w-[80%] custom-input"
-                              value={cashVoucher}
-                              onChange={(e) => setCashVoucher(e.target.value)}
+                              value={voucherType}
+                              disabled
                             />{" "}
                           </div>
                         </div>
@@ -373,16 +390,12 @@ const page = () => {
                                 <option value="">Select...</option>
                                 {narrationOptions.map((option) => (
                                   <option key={option.code} value={option.code}>
-                                    {option.code} - {option.description}
+                                    {option.code}
                                   </option>
                                 ))}
                               </select>
-                              <button
-                                onClick={handlePrompt}
-                                className="px-4 py-2 bg-gray-200 border border-gray-300 rounded-lg text-black text-sm hover:bg-gray-300"
-                              >
-                                PROMPT
-                              </button>
+
+                              <PromptModal />
                             </div>
                           </div>
                           <div className="flex flex-col justify-end ">
@@ -401,7 +414,7 @@ const page = () => {
                         VIDE
                       </label>
                       <div className="mb-4 bg-blue-50 sm:mb-6 flex flex-col gap-4 border p-3 rounded-xl">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 w-full">
                           {/* NO */}
                           <div className="flex-1">
                             <label className="block text-gray-700 font-medium mb-2 text-sm">
@@ -416,15 +429,14 @@ const page = () => {
                           </div>
 
                           {/* DATE */}
-                          <div className="flex-1">
+                          <div className="flex-1 flex-col">
                             <label className="block text-gray-700 font-medium mb-2 text-sm">
                               DATE
                             </label>
-                            <input
-                              type="date"
+                            <DatePicker
                               className="w-full custom-input"
-                              value={dateField}
-                              onChange={(e) => setDateField(e.target.value)}
+                              selected={dateField}
+                              onChange={(date) => setDateField(date)}
                             />
                           </div>
                         </div>
@@ -482,7 +494,7 @@ const page = () => {
                     <div className="px-1">
                       <div className="h-px bg-gray-200 mb-4 sm:mb-6"></div>
                       {/* Universal Code */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 sm:mb-6">
+                      <div className="grid grid-cols-1  gap-2 mb-4 sm:mb-6">
                         <div className="flex flex-col gap-2">
                           <label className="block text-gray-700 font-medium mb-2 text-sm">
                             Universal Code
