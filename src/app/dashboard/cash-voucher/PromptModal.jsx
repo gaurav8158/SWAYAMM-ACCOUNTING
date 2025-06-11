@@ -25,15 +25,12 @@ export function PromptModal() {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Voucher</DialogTitle>
-            {/* <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
-            </DialogDescription> */}
+            <DialogTitle>VOUCHER</DialogTitle>
+            <DialogDescription>BEING AMOUNT</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
-              <label htmlFor="name-1">Amount Paid For</label>
+              <label htmlFor="name-1">PAID FOR :</label>
               <input
                 className="custom-input"
                 id="name-1"
@@ -42,7 +39,7 @@ export function PromptModal() {
               />
             </div>
             <div className="grid gap-3">
-              <label htmlFor="username-1">Station</label>
+              <label htmlFor="username-1">PAID TO :</label>
               <input
                 className="custom-input"
                 id="username-1"
@@ -53,9 +50,9 @@ export function PromptModal() {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">CANCEL</Button>
             </DialogClose>
-            <Button type="submit">Submit</Button>
+            <Button type="submit">SUBMIT</Button>
           </DialogFooter>
         </DialogContent>
       </form>

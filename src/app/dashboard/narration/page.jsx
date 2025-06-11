@@ -1,9 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Save,
-  Ban,
-} from "lucide-react";
+import { Save, Ban } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import {
   Accordion,
@@ -13,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import Cardheader from "@/components/dashboard/Cardheader";
+import DatePicker from "react-datepicker";
 
 // Responsive Select Field Component
 const SelectField = ({
@@ -34,33 +32,63 @@ const SelectField = ({
 
       {/* Input and Select - Stack on mobile, side by side on desktop */}
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="bg-gray-200 text-gray-700 rounded-xl p-3 font-medium flex items-center sm:min-w-[140px] lg:min-w-[160px]">
-          {code || label}
-        </div>
+        <select
+          className="bg-gray-200 text-gray-700 rounded-xl p-3 font-medium flex items-center sm:min-w-[140px] lg:min-w-[160px]"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        >
+          <option value="">{placeholder}</option>
+          {options.map((option) => (
+            <option key={option.code} value={option.description}>
+              {option.code}
+            </option>
+          ))}
+        </select>
         <div className="flex-1">
-          <label className="block text-gray-700 font-medium mb-2 text-sm sm:hidden">
-            {label} Description
-          </label>
-          <select
-            className="w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-          >
-            <option value="">{placeholder}</option>
-            {options.map((option) => (
-              <option key={option.code} value={option.code}>
-                {option.code} - {option.description}
-              </option>
-            ))}
-          </select>
+          <div className="w-full bg-white text-black rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+            {code || label}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+const EntryField = ({
+  label,
+  value1,
+  onChange1,
+  value2,
+  onChange2,
+  placeholder = "Select...",
+}) => {
+  return (
+    <div className="mb-6">
+      {/* Label */}
+      <div className="mb-3">
+        <label className="text-gray-700 font-medium text-sm lg:text-base block">
+          {label}
+        </label>
+      </div>
 
+      {/* Inputs */}
+      <div className="flex flex-row gap-3">
+        <input
+          className="custom-input w-[20%]"
+          value={value1}
+          onChange={(e) => onChange1(e.target.value)}
+        />
+
+        <input
+          className="custom-input w-[80%]"
+          value={value2}
+          onChange={(e) => onChange2(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+};
 // Main Page Component
-const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
+const Page = () => {
   const [selectedNarration, setSelectedNarration] = useState("");
   const [selectedVoucherType, setSelectedVoucherType] = useState("");
   const [selectedTranType, setSelectedTranType] = useState("");
@@ -70,12 +98,25 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
   const [responsiblePerson, setResponsiblePerson] = useState("SA");
 
   // Selected codes for display
+  const [selectedDebitDbAccode, setSelectedDebitDbAccode] = useState("");
+  const [selectedDebitLedgercode, setSelectedDebitLedgercode] = useState("");
+  const [selectedDebitPLcode, setSelectedDebitPLcode] = useState("");
+  const [selectedDebitBSHcode, setSelectedDebitBSHcode] = useState("");
+  const [selectedDebitCFcode, setSelectedDebitCFcode] = useState("");
   const [selectedDebitDbAc, setSelectedDebitDbAc] = useState("");
+
   const [selectedDebitLedger, setSelectedDebitLedger] = useState("");
+
   const [selectedDebitPL, setSelectedDebitPL] = useState("");
+
   const [selectedDebitBSH, setSelectedDebitBSH] = useState("");
   const [selectedDebitCF, setSelectedDebitCF] = useState("");
 
+  const [selectedCreditCrAccode, setSelectedCreditCrAccode] = useState("");
+  const [selectedCreditLedgercode, setSelectedCreditLedgercode] = useState("");
+  const [selectedCreditPLcode, setSelectedCreditPLcode] = useState("");
+  const [selectedCreditBSHcode, setSelectedCreditBSHcode] = useState("");
+  const [selectedCreditCFcode, setSelectedCreditCFcode] = useState("");
   const [selectedCreditCrAc, setSelectedCreditCrAc] = useState("");
   const [selectedCreditLedger, setSelectedCreditLedger] = useState("");
   const [selectedCreditPL, setSelectedCreditPL] = useState("");
@@ -180,7 +221,6 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
     console.log("Cancelling...");
   };
 
-
   return (
     <div className="h-screen overflow-y-auto bg-[#EEEEF1] ">
       <div className={`transition-all  duration-300 ease-in-out `}>
@@ -230,7 +270,7 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                         onChange={setSelectedVoucherType}
                       />
                       {/* Additional Controls Grid */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2  gap-4 lg:gap-6">
                         <div>
                           <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
                             Book
@@ -247,11 +287,11 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                           <label className="block text-gray-700 font-medium mb-3 text-sm lg:text-base">
                             Date of Opening
                           </label>
-                          <input
-                            type="text"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black transition-all duration-200"
-                            value={dateOfOpening}
-                            onChange={(e) => setDateOfOpening(e.target.value)}
+
+                          <DatePicker
+                            className="custom-input w-full"
+                            selected={dateOfOpening}
+                            onChange={(date) => setDateOfOpening(date)}
                           />
                         </div>
                       </div>
@@ -265,48 +305,48 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                     <div className="px-1">
                       <div className="h-px bg-gray-200 mb-8"></div>
 
-                      <SelectField
+                      <EntryField
                         label="DB A/C"
-                        code={selectedDebitDbAc}
-                        options={dbAcOptions}
-                        value={selectedDebitDbAc}
-                        onChange={setSelectedDebitDbAc}
+                        value1={selectedDebitDbAccode}
+                        value2={selectedDebitDbAc}
+                        onChange1={setSelectedDebitDbAccode}
+                        onChange2={setSelectedDebitDbAc}
                         placeholder="Select DB A/C..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="Ledger"
-                        code={selectedDebitLedger}
-                        options={ledgerOptions}
-                        value={selectedDebitLedger}
-                        onChange={setSelectedDebitLedger}
+                        value1={selectedDebitLedgercode}
+                        onChange1={setSelectedDebitLedgercode}
+                        value2={selectedDebitLedger}
+                        onChange2={setSelectedDebitLedger}
                         placeholder="Select Ledger..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="P & L"
-                        code={selectedDebitPL}
-                        options={plOptions}
-                        value={selectedDebitPL}
-                        onChange={setSelectedDebitPL}
+                        value1={selectedDebitPLcode}
+                        onChange1={setSelectedDebitPLcode}
+                        value2={selectedDebitPL}
+                        onChange2={setSelectedDebitPL}
                         placeholder="Select P&L Account..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="B.SH."
-                        code={selectedDebitBSH}
-                        options={bshOptions}
-                        value={selectedDebitBSH}
-                        onChange={setSelectedDebitBSH}
+                        value1={selectedDebitBSHcode}
+                        onChange1={setSelectedDebitBSHcode}
+                        value2={selectedDebitBSH}
+                        onChange2={setSelectedDebitBSH}
                         placeholder="Select Balance Sheet Account..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="C & F"
-                        code={selectedDebitCF}
-                        options={cfOptions}
-                        value={selectedDebitCF}
-                        onChange={setSelectedDebitCF}
+                        value1={selectedDebitCFcode}
+                        onChange1={setSelectedDebitCFcode}
+                        value2={selectedDebitCF}
+                        onChange2={setSelectedDebitCF}
                         placeholder="Select C & F..."
                       />
                     </div>
@@ -318,49 +358,48 @@ const Page = ({ isCollapsed, activeItem, toggleMobileSidebar }) => {
                     {/* Credit Entries Section */}
                     <div className="px-1">
                       <div className="h-px bg-gray-200 mb-8"></div>
-
-                      <SelectField
+                      <EntryField
                         label="CR A/C"
-                        code={selectedCreditCrAc}
-                        options={crAcOptions}
-                        value={selectedCreditCrAc}
-                        onChange={setSelectedCreditCrAc}
+                        value1={selectedCreditCrAccode}
+                        value2={selectedCreditCrAc}
+                        onChange1={setSelectedCreditCrAccode}
+                        onChange2={setSelectedCreditCrAc}
                         placeholder="Select CR A/C..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="Ledger"
-                        code={selectedCreditLedger}
-                        options={ledgerOptions}
-                        value={selectedCreditLedger}
-                        onChange={setSelectedCreditLedger}
+                        value1={selectedCreditLedgercode}
+                        onChange1={setSelectedCreditLedgercode}
+                        value2={selectedCreditLedger}
+                        onChange2={setSelectedCreditLedger}
                         placeholder="Select Ledger..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="P & L"
-                        code={selectedCreditPL}
-                        options={plOptions}
-                        value={selectedCreditPL}
-                        onChange={setSelectedCreditPL}
+                        value1={selectedCreditPLcode}
+                        onChange1={setSelectedCreditPLcode}
+                        value2={selectedCreditPL}
+                        onChange2={setSelectedCreditPL}
                         placeholder="Select P&L Account..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="B.SH."
-                        code={selectedCreditBSH}
-                        options={bshOptions}
-                        value={selectedCreditBSH}
-                        onChange={setSelectedCreditBSH}
+                        value1={selectedCreditBSHcode}
+                        onChange1={setSelectedCreditBSHcode}
+                        value2={selectedCreditBSH}
+                        onChange2={setSelectedCreditBSH}
                         placeholder="Select Balance Sheet Account..."
                       />
 
-                      <SelectField
+                      <EntryField
                         label="C & F"
-                        code={selectedCreditCF}
-                        options={cfOptions}
-                        value={selectedCreditCF}
-                        onChange={setSelectedCreditCF}
+                        value1={selectedCreditCFcode}
+                        onChange1={setSelectedCreditCFcode}
+                        value2={selectedCreditCF}
+                        onChange2={setSelectedCreditCF}
                         placeholder="Select C & F..."
                       />
                     </div>

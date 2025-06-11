@@ -18,6 +18,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Cardheader from "@/components/dashboard/Cardheader";
+import { PromptModal } from "../cash-voucher/PromptModal";
+import DatePicker from "react-datepicker";
 const Checkbox = ({ id, label, checked, onChange }) => {
   return (
     <div className="flex items-center gap-2">
@@ -55,23 +57,23 @@ const RadioButton = ({ id, name, label, value, checked, onChange }) => {
 
 const page = () => {
   // Header fields
-  const [tranType, setTranType] = useState("JV");
+  const [tranType, setTranType] = useState("Cash Payment");
   const [trandesc, setTrandesc] = useState("");
   const [srNo, setSrNo] = useState("9384");
   const [voucherNo, setVoucherNo] = useState("1585");
   const [narrationCode, setNarrationCode] = useState("");
-  const [vtDt, setVtDt] = useState("17-Mar-25");
-  const [voucherType, setVoucherType] = useState("C");
-  const [cashVoucher, setCashVoucher] = useState("CASH VOUCHER");
+  const [vtDt, setVtDt] = useState(new Date());
+  const [voucherType, setVoucherType] = useState("Cash Voucher");
+
   const [noField, setNoField] = useState("");
-  const [dateField, setDateField] = useState("");
+  const [dateField, setDateField] = useState(new Date());
 
   // Print options
   const [printMemo, setPrintMemo] = useState(true);
   const [vide, setVide] = useState(false);
 
   // Debit entries
-  const [debitUniversalCode, setDebitUniversalCode] = useState("");
+  const [debitUniversalCode, setDebitUniversalCode] = useState("BA001");
 
   const [debitTotal, setDebitTotal] = useState("");
   const [debitLedger, setDebitLedger] = useState("");
@@ -80,7 +82,7 @@ const page = () => {
   const [debitCashFlow, setDebitCashFlow] = useState("");
 
   // Credit entries
-  const [creditUniversalCode, setCreditUniversalCode] = useState("");
+  const [creditUniversalCode, setCreditUniversalCode] = useState("ZC006");
 
   const [creditLedger, setCreditLedger] = useState("");
   const [creditProfitLoss, setCreditProfitLoss] = useState("");
@@ -90,22 +92,28 @@ const page = () => {
   // Bottom fields
   const [narration, setNarration] = useState("");
   const [cashInHand, setCashInHand] = useState("0");
+  const [cashInHandcode, setCashInHandcode] = useState("0");
   const [enclosures, setEnclosures] = useState("");
   const [enclosurescode, setEnclosurescode] = useState("");
 
   // Dropdown options
-  const tranTypeOptions = [
+  const voucherTypeOptions = [
     { code: "JV", description: "Journal Voucher" },
     { code: "PV", description: "Payment Voucher" },
     { code: "RV", description: "Receipt Voucher" },
-    { code: "CV", description: "Contra Voucher" },
+    { code: "CV", description: "Cash Voucher" },
   ];
-
+  const tranTypeOptions = [
+    { code: "10", description: "Cash Payment" },
+    { code: "11", description: "Bank Transfer" },
+    { code: "12", description: "Expense Payment" },
+    { code: "13", description: "Revenue Receipt" },
+  ];
   const narrationOptions = [
-    { code: "N1", description: "Cash Payment" },
-    { code: "N2", description: "Bank Transfer" },
-    { code: "N3", description: "Expense Payment" },
-    { code: "N4", description: "Revenue Receipt" },
+    { code: "CON1001", description: "Cash Payment" },
+    { code: "CON1002", description: "Bank Transfer" },
+    { code: "CON1003", description: "Expense Payment" },
+    { code: "CON1004", description: "Revenue Receipt" },
   ];
 
   const handlePrompt = () => {
@@ -124,14 +132,14 @@ const page = () => {
     acCode: "",
     acHead: "",
     amount: "",
-    refDate: "",
+    refDate: formatDateToYMD(new Date()),
     refNo: "",
   });
   const [crformData, setCrFormData] = useState({
     acCode: "",
     acHead: "",
     amount: "",
-    refDate: "",
+    refDate: formatDateToYMD(new Date()),
     refNo: "",
   });
 
@@ -213,6 +221,17 @@ const page = () => {
       setEditCrIndex(null);
     }
   };
+  function formatDateToYMD(date) {
+    if (!(date instanceof Date) || isNaN(date)) {
+      throw new Error("Invalid Date object");
+    }
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 0-indexed
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
   const handleAddOrUpdateCr = () => {
     if (!crformData.acCode || !crformData.acHead || !crformData.amount) return;
 
@@ -252,7 +271,7 @@ const page = () => {
               title2="BUDAUN"
               head="Journal/Sales/Purchase VOUCHER BACK DATE ENTRY"
             />
-            <div className=" ">
+            <div>
               <Accordion
                 type="multiple"
                 // collapsible
@@ -278,15 +297,17 @@ const page = () => {
                               onChange={(e) => setTranType(e.target.value)}
                             >
                               {tranTypeOptions.map((option) => (
-                                <option key={option.code} value={option.code}>
+                                <option
+                                  key={option.code}
+                                  value={option.description}
+                                >
                                   {option.code}
                                 </option>
                               ))}
                             </select>
                             <input
                               disabled
-                              value={trandesc}
-                              onChange={(e) => setTrandesc(e.target.value)}
+                              value={tranType}
                               type="text"
                               className="w-[80%] custom-input "
                             />
@@ -323,15 +344,14 @@ const page = () => {
                       {/* Second Row Controls */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 mb-4 sm:mb-6 ">
                         {/* VOUCHER DATE */}
-                        <div className="mb-2 sm:mb-0">
+                        <div className="mb-2 flex flex-col sm:mb-0">
                           <label className="block text-gray-700 font-medium mb-2 text-sm">
                             VOUCHER DATE
                           </label>
-                          <input
-                            type="date"
+                          <DatePicker
                             className="w-full custom-input"
-                            value={vtDt}
-                            onChange={(e) => setVtDt(e.target.value)}
+                            selected={vtDt}
+                            onChange={(date) => setVtDt(date)}
                           />
                         </div>
 
@@ -341,17 +361,25 @@ const page = () => {
                             VOUCHER TYPE
                           </label>
                           <div className="flex gap-2">
-                            <input
-                              type="text"
+                            <select
                               className="w-[20%] custom-input"
                               value={voucherType}
                               onChange={(e) => setVoucherType(e.target.value)}
-                            />
+                            >
+                              {voucherTypeOptions.map((option) => (
+                                <option
+                                  key={option.code}
+                                  value={option.description}
+                                >
+                                  {option.code}
+                                </option>
+                              ))}
+                            </select>
                             <input
                               type="text"
                               className="w-[80%] custom-input"
-                              value={cashVoucher}
-                              onChange={(e) => setCashVoucher(e.target.value)}
+                              value={voucherType}
+                              disabled
                             />{" "}
                           </div>
                         </div>
@@ -376,16 +404,12 @@ const page = () => {
                                 <option value="">Select...</option>
                                 {narrationOptions.map((option) => (
                                   <option key={option.code} value={option.code}>
-                                    {option.code} - {option.description}
+                                    {option.code}
                                   </option>
                                 ))}
                               </select>
-                              <button
-                                onClick={handlePrompt}
-                                className="px-4 py-2 bg-gray-200 border border-gray-300 rounded-lg text-black text-sm hover:bg-gray-300"
-                              >
-                                PROMPT
-                              </button>
+
+                              <PromptModal />
                             </div>
                           </div>
                           <div className="flex flex-col justify-end ">
@@ -404,7 +428,7 @@ const page = () => {
                         VIDE
                       </label>
                       <div className="mb-4 bg-blue-50 sm:mb-6 flex flex-col gap-4 border p-3 rounded-xl">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 w-full">
                           {/* NO */}
                           <div className="flex-1">
                             <label className="block text-gray-700 font-medium mb-2 text-sm">
@@ -419,15 +443,14 @@ const page = () => {
                           </div>
 
                           {/* DATE */}
-                          <div className="flex-1">
+                          <div className="flex-1 flex-col">
                             <label className="block text-gray-700 font-medium mb-2 text-sm">
                               DATE
                             </label>
-                            <input
-                              type="date"
+                            <DatePicker
                               className="w-full custom-input"
-                              value={dateField}
-                              onChange={(e) => setDateField(e.target.value)}
+                              selected={dateField}
+                              onChange={(date) => setDateField(date)}
                             />
                           </div>
                         </div>
@@ -484,96 +507,8 @@ const page = () => {
                     {/* DR (Debit) Section */}
                     <div className="px-1">
                       <div className="h-px bg-gray-200 mb-4 sm:mb-6"></div>
-                      {/* Universal Code */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 sm:mb-6">
-                        <div className="flex flex-col gap-2">
-                          <label className="block text-gray-700 font-medium mb-2 text-sm">
-                            Universal Code
-                          </label>
-                          <div className="flex flex-row gap-2">
-                            <input
-                              className="w-[20%] custom-input"
-                              placeholder="0"
-                              value={debitUniversalCode}
-                              onChange={(e) =>
-                                setDebitUniversalCode(e.target.value)
-                              }
-                            />
-                            <input
-                              className="w-[80%] custom-input"
-                              placeholder="NA"
-                              readOnly
-                            />{" "}
-                          </div>
-                        </div>
-                        <div className="flex flex-col gap-4 border rounded-2xl p-3 shadow-md">
-                          <span className="text-sm pb-2 border-b font-medium text-gray-700">
-                            FOR DEBIT
-                          </span>
-
-                          {/* Ledger, Profit & Loss, Balance Sheet, Cash Flow fields */}
-                          <div className="grid grid-cols-2 gap-4 text-xs text-gray-600">
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">LEDGER</span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={debitLedger}
-                                readOnly
-                              />
-                            </div>
-
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">
-                                PROFIT & LOSS
-                              </span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={debitProfitLoss}
-                                readOnly
-                              />
-                            </div>
-
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">
-                                BALANCE SHEET
-                              </span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={debitBalanceSheet}
-                                readOnly
-                              />
-                            </div>
-
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">
-                                CASH FLOW
-                              </span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={debitCashFlow}
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-6">
-                        {/* Form Section */}
-
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border bg-blue-50 px-2 py-3 rounded-2xl">
+                      <div className="grid grid-cols-1 md:grid-cols-2  gap-2 mb-4 sm:mb-6">
+                        <div className="grid grid-cols-1  gap-4 border bg-blue-50 px-2 py-3 rounded-2xl">
                           <input
                             className="custom-input"
                             name="acCode"
@@ -596,14 +531,18 @@ const page = () => {
                             value={formData.amount}
                             onChange={handleChange}
                           />
-                          <input
-                            className="w-full custom-input"
+                          <DatePicker
                             name="refDate"
-                            type="date"
-                            placeholder="REF. DATE"
-                            value={formData.refDate}
-                            onChange={handleChange}
+                            className="w-full custom-input"
+                            selected={formData.refDate}
+                            onChange={(date) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                refDate: date,
+                              }))
+                            }
                           />
+
                           <input
                             className="custom-input"
                             name="refNo"
@@ -611,14 +550,107 @@ const page = () => {
                             value={formData.refNo}
                             onChange={handleChange}
                           />
-                          <Button
-                            className="sm:col-span-1 mt-auto max-w-[100px]"
-                            onClick={handleAddOrUpdate}
-                          >
-                            {editIndex !== null ? "Update" : "Add Entry"}
-                          </Button>
+                          <div className="flex justify-end">
+                            <Button
+                              className="sm:col-span-1 mt-auto max-w-[100px]"
+                              onClick={handleAddOrUpdate}
+                            >
+                              {editIndex !== null ? "Update" : "Add Entry"}
+                            </Button>
+                          </div>
                         </div>
 
+                        <div className="grid grid-cols-1  gap-2 ">
+                          {/* Universal Code */}
+                          <div className="flex flex-col gap-2">
+                            <label className="block text-gray-700 font-medium mb-2 text-sm">
+                              Universal Code
+                            </label>
+                            <div className="flex flex-row gap-2">
+                              <input
+                                className="w-[20%] custom-input"
+                                placeholder="0"
+                                value={debitUniversalCode}
+                                onChange={(e) =>
+                                  setDebitUniversalCode(e.target.value)
+                                }
+                              />
+                              <input
+                                className="w-[80%] custom-input"
+                                placeholder="NA"
+                                readOnly
+                              />{" "}
+                            </div>
+                          </div>
+                          {/* Form Section */}
+
+                          <div className="flex flex-col gap-4 border rounded-2xl p-3 shadow-md">
+                            <span className="text-sm pb-2 border-b font-medium text-gray-700">
+                              FOR DEBIT
+                            </span>
+
+                            {/* Ledger, Profit & Loss, Balance Sheet, Cash Flow fields */}
+                            <div className="grid grid-cols-2 gap-4 text-xs text-gray-600">
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  LEDGER
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={debitLedger}
+                                  readOnly
+                                />
+                              </div>
+
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  PROFIT & LOSS
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={debitProfitLoss}
+                                  readOnly
+                                />
+                              </div>
+
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  BALANCE SHEET
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={debitBalanceSheet}
+                                  readOnly
+                                />
+                              </div>
+
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  CASH FLOW
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={debitCashFlow}
+                                  readOnly
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="space-y-6">
                         {/* Table Section */}
                         <Table className="border ">
                           <TableHeader>
@@ -688,96 +720,9 @@ const page = () => {
                     {/* CR (Credit) Section */}
                     <div className="px-1">
                       <div className="h-px bg-gray-200 mb-4 sm:mb-6"></div>
-                      {/* Universal Code */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 sm:mb-6">
-                        <div className="flex flex-col gap-2">
-                          <label className="block text-gray-700 font-medium mb-2 text-sm">
-                            Universal Code
-                          </label>
-                          <div className="flex flex-row gap-2">
-                            <input
-                              className="w-[20%] custom-input"
-                              placeholder="0"
-                              value={creditUniversalCode}
-                              onChange={(e) =>
-                                setCreditUniversalCode(e.target.value)
-                              }
-                            />
-                            <input
-                              className="w-[80%] custom-input"
-                              placeholder="NA"
-                              readOnly
-                            />{" "}
-                          </div>
-                        </div>
-                        <div className="flex flex-col gap-4 border rounded-2xl p-3 shadow-md">
-                          <span className="text-sm pb-2 border-b font-medium text-gray-700">
-                            FOR CREDIT
-                          </span>
 
-                          {/* Ledger, Profit & Loss, Balance Sheet, Cash Flow fields */}
-                          <div className="grid grid-cols-2 gap-4 text-xs text-gray-600">
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">LEDGER</span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={creditLedger}
-                                readOnly
-                              />
-                            </div>
-
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">
-                                PROFIT & LOSS
-                              </span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={creditProfitLoss}
-                                readOnly
-                              />
-                            </div>
-
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">
-                                BALANCE SHEET
-                              </span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={creditBalanceSheet}
-                                readOnly
-                              />
-                            </div>
-
-                            {/* Item */}
-                            <div className="flex flex-col  items-start  gap-1 sm:gap-2">
-                              <span className="whitespace-nowrap">
-                                CASH FLOW
-                              </span>
-                              <input
-                                type="text"
-                                className="w-full sm:flex-1 px-2 py-1 border border-gray-300 rounded-sm text-black text-xs"
-                                placeholder="0"
-                                value={creditCashFlow}
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-6">
-                        {/* Form Section */}
-
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border bg-blue-50 px-2 py-3 rounded-2xl">
+                      <div className="grid grid-cols-1 md:grid-cols-2  gap-2 mb-4 sm:mb-6">
+                        <div className="grid grid-cols-1  gap-4 border bg-blue-50 px-2 py-3 rounded-2xl">
                           <input
                             className="custom-input"
                             name="acCode"
@@ -800,14 +745,20 @@ const page = () => {
                             value={crformData.amount}
                             onChange={handleChangecr}
                           />
-                          <input
-                            className="w-full custom-input"
+                          <DatePicker
                             name="refDate"
-                            type="date"
-                            placeholder="REF. DATE"
-                            value={crformData.refDate}
-                            onChange={handleChangecr}
+                            className="w-full custom-input"
+                            selected={crformData.refDate}
+                            onChange={(date) => {
+                              console.log(date);
+
+                              setCrFormData((prev) => ({
+                                ...prev,
+                                refDate: formatDateToYMD(date),
+                              }));
+                            }}
                           />
+
                           <input
                             className="custom-input"
                             name="refNo"
@@ -815,14 +766,107 @@ const page = () => {
                             value={crformData.refNo}
                             onChange={handleChangecr}
                           />
-                          <Button
-                            className="sm:col-span-1 mt-auto max-w-[100px]"
-                            onClick={handleAddOrUpdateCr}
-                          >
-                            {editIndex !== null ? "Update" : "Add Entry"}
-                          </Button>
+                          <div className="flex justify-end">
+                            <Button
+                              className="sm:col-span-1 mt-auto max-w-[100px]"
+                              onClick={handleAddOrUpdateCr}
+                            >
+                              {editIndex !== null ? "Update" : "Add Entry"}
+                            </Button>
+                          </div>
                         </div>
+                        <div className="grid grid-cols-1  gap-2 ">
+                          {/* Universal Code */}
+                          <div className="flex flex-col gap-2">
+                            <label className="block text-gray-700 font-medium mb-2 text-sm">
+                              Universal Code
+                            </label>
+                            <div className="flex flex-row gap-2">
+                              <input
+                                className="w-[20%] custom-input"
+                                placeholder="0"
+                                value={creditUniversalCode}
+                                onChange={(e) =>
+                                  setCreditUniversalCode(e.target.value)
+                                }
+                              />
+                              <input
+                                className="w-[80%] custom-input"
+                                placeholder="NA"
+                                readOnly
+                              />{" "}
+                            </div>
+                          </div>
+                          {/* Form Section */}
 
+                          <div className="flex flex-col gap-4 border rounded-2xl p-3 shadow-md">
+                            <span className="text-sm pb-2 border-b font-medium text-gray-700">
+                              FOR CREDIT
+                            </span>
+
+                            {/* Ledger, Profit & Loss, Balance Sheet, Cash Flow fields */}
+                            <div className="grid grid-cols-2 gap-4 text-xs text-gray-600">
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  LEDGER
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={creditLedger}
+                                  readOnly
+                                />
+                              </div>
+
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  PROFIT & LOSS
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={creditProfitLoss}
+                                  readOnly
+                                />
+                              </div>
+
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  BALANCE SHEET
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={creditBalanceSheet}
+                                  readOnly
+                                />
+                              </div>
+
+                              {/* Item */}
+                              <div className="flex flex-col  items-start  gap-1 sm:gap-2">
+                                <span className="whitespace-nowrap">
+                                  CASH FLOW
+                                </span>
+                                <input
+                                  type="text"
+                                  className="w-full custom-input"
+                                  placeholder="0"
+                                  value={creditCashFlow}
+                                  readOnly
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-6">
                         {/* Table Section */}
                         <Table className="border ">
                           <TableHeader>
@@ -868,13 +912,14 @@ const page = () => {
                         </Table>
                       </div>
 
-                      {/* Debit Total */}
+                      {/* credit Total */}
                       <div className="flex justify-end mt-4">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-medium text-gray-700">
                             CREDIT TOTAL
                           </span>
                           <input
+                            disabled
                             type="text"
                             className="w-40 custom-input"
                             value={totalAmountCredit.toFixed(2)}
@@ -892,39 +937,48 @@ const page = () => {
                     <div className="px-1">
                       <div className="h-px bg-gray-200 mb-4 sm:mb-6"></div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                      <div className="grid grid-cols-1 sm:grid-cols-2  gap-4 mb-8">
                         {/* Left Side - Narration */}
-                        <div>
-                          <label className="block text-gray-700 font-medium mb-1 text-sm">
-                            NARRATION:
-                          </label>
-                          <div className="bg-gray-100 border border-gray-300 rounded-md p-2 mb-2 text-sm text-gray-800">
-                            <span>CASH</span>
+                        <div className="flex flex-col gap-2">
+                          {/* Right Sidw - Cash in Hand */}
+                          <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium mb-1 text-sm">
+                              CASH IN HAND:
+                            </label>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                className="w-[20%] custom-input"
+                                value={cashInHand}
+                                onChange={(e) =>
+                                  setCashInHandcode(e.target.value)
+                                }
+                                placeholder="Enter cash in hand"
+                              />
+                              <input
+                                type="text"
+                                className="w-[80%] custom-input"
+                                value={cashInHand}
+                                onChange={(e) => setCashInHand(e.target.value)}
+                                placeholder="Enter cash in hand"
+                              />{" "}
+                            </div>
                           </div>
-                          <textarea
-                            className="w-full h-20 custom-input resize-none"
-                            value={narration}
-                            onChange={(e) => setNarration(e.target.value)}
-                          />
+                          <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium mb-1 text-sm">
+                              NARRATION:
+                            </label>
+                            <textarea
+                              className="w-full h-20 custom-input "
+                              placeholder="description"
+                              value={narration}
+                              onChange={(e) => setNarration(e.target.value)}
+                            />
+                          </div>
                         </div>
-
-                        {/* Middle - Cash in Hand */}
-                        <div>
-                          <label className="block text-gray-700 font-medium mb-1 text-sm">
-                            CASH IN HAND:
-                          </label>
-                          <input
-                            type="text"
-                            className="w-full custom-input"
-                            value={cashInHand}
-                            onChange={(e) => setCashInHand(e.target.value)}
-                            placeholder="Enter cash in hand"
-                          />
-                        </div>
-
-                        {/* Right Side - Enclosures */}
-                        <div>
-                          <label className="block text-gray-700 font-medium mb-1 text-sm">
+                        {/* Middle- Enclosures */}
+                        <div className="flex flex-col">
+                          <label className="text-gray-700 font-medium mb-1 text-sm">
                             ENCLOSURES:
                           </label>
                           <div className="flex flex-wrap sm:flex-nowrap gap-2 mb-2">
@@ -933,15 +987,21 @@ const page = () => {
                               onChange={(e) =>
                                 setEnclosurescode(e.target.value)
                               }
-                              className="custom-input w-full ]"
+                              className="custom-input w-full"
                               placeholder="Code"
                             />
                           </div>
-                          <textarea
-                            className="w-full h-16 custom-input resize-none"
-                            value={enclosures}
-                            onChange={(e) => setEnclosures(e.target.value)}
-                          />
+                          <div className="flex flex-col">
+                            <label className="text-gray-700 font-medium mb-1 text-sm">
+                              Description :
+                            </label>
+                            <textarea
+                              className="w-full h-20 custom-input"
+                              placeholder="description"
+                              value={enclosures}
+                              onChange={(e) => setEnclosures(e.target.value)}
+                            />{" "}
+                          </div>
                         </div>
                       </div>
                     </div>
