@@ -42,7 +42,8 @@ const page = () => {
     <div className="min-h-screen bg-[#EEEEF1] overflow-y-auto">
       <Navbar pageTitle="Statement Reports" menu="Reports" />
 
-      <div className="p-4 sm:p-6 lg:p-8">
+    
+      <div className="p-6 sm:px-4 md:px-6 py-1">
         <div className="bg-white rounded-xl shadow p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Statement of Account

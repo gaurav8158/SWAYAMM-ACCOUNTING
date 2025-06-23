@@ -26,7 +26,7 @@ export default function SalesOverviewChart() {
     return (
         <div className="w-full p-4"> {/* Removed fixed height, added padding */}
             <h2 className="text-lg font-bold text-gray-700 mb-2">Sales Overview</h2>
-            <p className="text-lg  text-gray-600 mb-4"><span className='text-[#82D717]'>↑</span> 4% MORE IN 2021</p>
+            <p className="text-lg  text-gray-600 mb-4"><span className='text-[#82D717]'>↑</span> 4% MORE IN 2025</p>
 
             <div className="w-full h-64"> {/* Fixed height container */}
                 <ResponsiveContainer width="100%" height="100%">

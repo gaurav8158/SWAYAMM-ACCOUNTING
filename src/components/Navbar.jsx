@@ -124,7 +124,7 @@ const Navbar = ({ pageTitle = "Dashboard", menu }) => {
             <button className="flex items-center text-gray-700  bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-500 hover:to-indigo-600 rounded-lg md:rounded-xl shadow-sm hover:shadow-lg hover:text-white transition-all duration-300 transform hover:scale-105  border-blue-100 hover:border-transparent px-3 lg:px-4 py-2 lg:py-2.5  border   ">
               <User size={16} className="lg:w-4 lg:h-4 mr-0 sm:mr-2" />
               <span className="font-semibold text-sm hidden sm:inline">
-                SIGN IN
+                ADMIN
               </span>
             </button>
 
